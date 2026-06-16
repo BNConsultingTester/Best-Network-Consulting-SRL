@@ -1,0 +1,2599 @@
+<!DOCTYPE html>
+<!-- saved from url=(0128)http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&_ij_reload=RELOAD_ON_SAVE&sort=result -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title id="head-title">raport_testare.html</title>
+      <style type="text/css">body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  /* do not increase min-width as some may use split screens */
+  min-width: 800px;
+  color: #999;
+}
+
+h1 {
+  font-size: 24px;
+  color: black;
+}
+
+h2 {
+  font-size: 16px;
+  color: black;
+}
+
+p {
+  color: black;
+}
+
+a {
+  color: #999;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+/******************************
+ * SUMMARY INFORMATION
+ ******************************/
+#environment td {
+  padding: 5px;
+  border: 1px solid #e6e6e6;
+  vertical-align: top;
+}
+#environment tr:nth-child(odd) {
+  background-color: #f6f6f6;
+}
+#environment ul {
+  margin: 0;
+  padding: 0 20px;
+}
+
+/******************************
+ * TEST RESULT COLORS
+ ******************************/
+span.passed,
+.passed .col-result {
+  color: green;
+}
+
+span.skipped,
+span.xfailed,
+span.rerun,
+.skipped .col-result,
+.xfailed .col-result,
+.rerun .col-result {
+  color: orange;
+}
+
+span.error,
+span.failed,
+span.xpassed,
+.error .col-result,
+.failed .col-result,
+.xpassed .col-result {
+  color: red;
+}
+
+.col-links__extra {
+  margin-right: 3px;
+}
+
+/******************************
+ * RESULTS TABLE
+ *
+ * 1. Table Layout
+ * 2. Extra
+ * 3. Sorting items
+ *
+ ******************************/
+/*------------------
+ * 1. Table Layout
+ *------------------*/
+#results-table {
+  border: 1px solid #e6e6e6;
+  color: #999;
+  font-size: 12px;
+  width: 100%;
+}
+#results-table th,
+#results-table td {
+  padding: 5px;
+  border: 1px solid #e6e6e6;
+  text-align: left;
+}
+#results-table th {
+  font-weight: bold;
+}
+
+/*------------------
+ * 2. Extra
+ *------------------*/
+.logwrapper {
+  max-height: 230px;
+  overflow-y: scroll;
+  background-color: #e6e6e6;
+}
+.logwrapper.expanded {
+  max-height: none;
+}
+.logwrapper.expanded .logexpander:after {
+  content: "collapse [-]";
+}
+.logwrapper .logexpander {
+  z-index: 1;
+  position: sticky;
+  top: 10px;
+  width: max-content;
+  border: 1px solid;
+  border-radius: 3px;
+  padding: 5px 7px;
+  margin: 10px 0 10px calc(100% - 80px);
+  cursor: pointer;
+  background-color: #e6e6e6;
+}
+.logwrapper .logexpander:after {
+  content: "expand [+]";
+}
+.logwrapper .logexpander:hover {
+  color: #000;
+  border-color: #000;
+}
+.logwrapper .log {
+  min-height: 40px;
+  position: relative;
+  top: -50px;
+  height: calc(100% + 50px);
+  border: 1px solid #e6e6e6;
+  color: black;
+  display: block;
+  font-family: "Courier New", Courier, monospace;
+  padding: 5px;
+  padding-right: 80px;
+  white-space: pre-wrap;
+}
+
+div.media {
+  border: 1px solid #e6e6e6;
+  float: right;
+  height: 240px;
+  margin: 0 5px;
+  overflow: hidden;
+  width: 320px;
+}
+
+.media-container {
+  display: grid;
+  grid-template-columns: 25px auto 25px;
+  align-items: center;
+  flex: 1 1;
+  overflow: hidden;
+  height: 200px;
+}
+
+.media-container--fullscreen {
+  grid-template-columns: 0px auto 0px;
+}
+
+.media-container__nav--right,
+.media-container__nav--left {
+  text-align: center;
+  cursor: pointer;
+}
+
+.media-container__viewport {
+  cursor: pointer;
+  text-align: center;
+  height: inherit;
+}
+.media-container__viewport img,
+.media-container__viewport video {
+  object-fit: cover;
+  width: 100%;
+  max-height: 100%;
+}
+
+.media__name,
+.media__counter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex: 0 0 25px;
+  align-items: center;
+}
+
+.collapsible td:not(.col-links) {
+  cursor: pointer;
+}
+.collapsible td:not(.col-links):hover::after {
+  color: #bbb;
+  font-style: italic;
+  cursor: pointer;
+}
+
+.col-result {
+  width: 130px;
+}
+.col-result:hover::after {
+  content: " (hide details)";
+}
+
+.col-result.collapsed:hover::after {
+  content: " (show details)";
+}
+
+#environment-header h2:hover::after {
+  content: " (hide details)";
+  color: #bbb;
+  font-style: italic;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+#environment-header.collapsed h2:hover::after {
+  content: " (show details)";
+  color: #bbb;
+  font-style: italic;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/*------------------
+ * 3. Sorting items
+ *------------------*/
+.sortable {
+  cursor: pointer;
+}
+.sortable.desc:after {
+  content: " ";
+  position: relative;
+  left: 5px;
+  bottom: -12.5px;
+  border: 10px solid #4caf50;
+  border-bottom: 0;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+.sortable.asc:after {
+  content: " ";
+  position: relative;
+  left: 5px;
+  bottom: 12.5px;
+  border: 10px solid #4caf50;
+  border-top: 0;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+
+.hidden, .summary__reload__button.hidden {
+  display: none;
+}
+
+.summary__data {
+  flex: 0 0 550px;
+}
+.summary__reload {
+  flex: 1 1;
+  display: flex;
+  justify-content: center;
+}
+.summary__reload__button {
+  flex: 0 0 300px;
+  display: flex;
+  color: white;
+  font-weight: bold;
+  background-color: #4caf50;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.summary__reload__button:hover {
+  background-color: #46a049;
+}
+.summary__spacer {
+  flex: 0 0 550px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filters,
+.collapse {
+  display: flex;
+  align-items: center;
+}
+.filters button,
+.collapse button {
+  color: #999;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.filters button:hover,
+.collapse button:hover {
+  color: #ccc;
+}
+
+.filter__label {
+  margin-right: 10px;
+}
+
+      </style>
+    
+  </head>
+  <body>
+    <h1 id="title">raport_testare.html</h1>
+    <p>Report generated on 16-Jun-2026 at 08:42:55 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a>
+        v4.2.0</p>
+    <div id="environment-header">
+      <h2>Environment</h2>
+    </div>
+    <table id="environment">
+      <tr>
+        <td>Python</td>
+        <td><div>3.13.14</div></td>
+      </tr>
+    
+      <tr>
+        <td>Platform</td>
+        <td><div>Windows-11-10.0.26100-SP0</div></td>
+      </tr>
+    
+      <tr>
+        <td>Packages</td>
+        <td><ul><li>pytest: 9.1.0</li><li>pluggy: 1.6.0</li><ul></ul></ul></td>
+      </tr>
+    
+      <tr>
+        <td>Plugins</td>
+        <td><ul><li>html: 4.2.0</li><li>metadata: 3.1.1</li><ul></ul></ul></td>
+      </tr>
+    </table>
+    <!-- TEMPLATES -->
+      <template id="template_environment_row"></template>
+    <template id="template_results-table__body--empty"></template>
+    <template id="template_results-table__tbody"></template>
+    <!-- END TEMPLATES -->
+    <div class="summary">
+      <div class="summary__data">
+        <h2>Summary</h2>
+        <div class="additional-summary prefix">
+        </div>
+        <p class="run-count">25 tests took 00:00:33.</p>
+        <p class="filter">(Un)check the boxes to filter the results.</p>
+        <div class="summary__reload">
+          <div class="summary__reload__button hidden" onclick="location.reload()">
+            <div>There are still tests running. <br>Reload this page to get the latest results!</div>
+          </div>
+        </div>
+        <div class="summary__spacer"></div>
+        <div class="controls">
+          <div class="filters">
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="failed">
+            <span class="failed">10 Failed,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="passed">
+            <span class="passed">15 Passed,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="skipped" disabled="">
+            <span class="skipped">0 Skipped,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="xfailed" disabled="">
+            <span class="xfailed">0 Expected failures,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="xpassed" disabled="">
+            <span class="xpassed">0 Unexpected passes,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="error" disabled="">
+            <span class="error">0 Errors,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="rerun" disabled="">
+            <span class="rerun">0 Reruns</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="retried" disabled="">
+            <span class="retried">0 Retried,</span>
+          </div>
+          <div class="collapse">
+            <button id="show_all_details">Show all details</button>&nbsp;/&nbsp;<button id="hide_all_details">Hide all details</button>
+          </div>
+        </div>
+      </div>
+      <div class="additional-summary summary">
+      </div>
+      <div class="additional-summary postfix">
+      </div>
+    </div>
+    <table id="results-table"><thead id="results-table-head">
+        <tr>
+          <th class="sortable asc" data-column-type="result">Result</th>
+          <th class="sortable" data-column-type="testId">Test</th>
+          <th class="sortable" data-column-type="duration">Duration</th>
+          <th>Links</th>
+        </tr>
+      </thead>
+      <tbody class="results-table-row failed" id="test_bn_consulting.py::test_public_pages_contain_expected_business_content[/zona-pentru-membri/-expected_fragments4]">
+        <tr class="collapsible" data-id="test_9">
+        <td class="col-result">Failed</td><td class="col-testId">test_bn_consulting.py::test_public_pages_contain_expected_business_content[/zona-pentru-membri/-expected_fragments4]</td><td class="col-duration">99 ms</td><td class="col-links"></td></tr>
+        <tr class="extras-row">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">http_session = &lt;requests.sessions.Session object at 0x000002380BD1DA90&gt;, path = '/zona-pentru-membri/', expected_fragments = ['membri', 'cont', 'pagini private']
+
+    @pytest.mark.parametrize("path,expected_fragments", EXPECTED_TEXT.items())
+    def test_public_pages_contain_expected_business_content(
+        http_session: requests.Session, path: str, expected_fragments: list[str]
+    ) -&gt; None:
+        page = fetch_page(http_session, path)
+&gt;       assert_text_contains_all(visible_page_text(page.soup), expected_fragments)
+
+test_bn_consulting.py:166: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+page_text = 'zona pentru membri :: bn.consulting2016 best network consulting srl resita pagina de start despre noi echipa contact ...arketing/ părți terțe cookie-urile de marketing ne permit să măsurăm și analizăm performanța site-ului nostru. salvați'
+expected_fragments = ['membri', 'cont', 'pagini private']
+
+    def assert_text_contains_all(page_text: str, expected_fragments: Iterable[str]) -&gt; None:
+        missing = [fragment for fragment in expected_fragments if normalize_text(fragment) not in page_text]
+&gt;       assert not missing, f"Lipsesc din pagina urmatoarele texte asteptate: {missing}"
+<span class="error">E       AssertionError: Lipsesc din pagina urmatoarele texte asteptate: ['pagini private']</span>
+<span class="error">E       assert not ['pagini private']</span>
+
+test_bn_consulting.py:146: AssertionError
+</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row failed" id="test_bn_consulting.py::test_contact_information_is_visible">
+        <tr class="collapsible" data-id="test_12">
+        <td class="col-result">Failed</td><td class="col-testId">test_bn_consulting.py::test_contact_information_is_visible</td><td class="col-duration">109 ms</td><td class="col-links"></td></tr>
+        <tr class="extras-row">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">http_session = &lt;requests.sessions.Session object at 0x000002380BD1DA90&gt;
+
+    def test_contact_information_is_visible(http_session: requests.Session) -&gt; None:
+        page = fetch_page(http_session, "/contact/")
+        text = visible_page_text(page.soup)
+    
+        for email in CONTACT_EMAILS:
+            assert email.lower() in text, f"Adresa {email} nu este vizibila pe pagina de contact"
+    
+        missing_phones = [pattern for pattern in CONTACT_PHONE_PATTERNS if not re.search(pattern, text)]
+&gt;       assert not missing_phones, f"Unele telefoane asteptate nu au fost gasite: {missing_phones}"
+<span class="error">E       AssertionError: Unele telefoane asteptate nu au fost gasite: ['0750[\\.\\s]*27[\\.\\s]*29[\\.\\s]*62']</span>
+<span class="error">E       assert not ['0750[\\.\\s]*27[\\.\\s]*29[\\.\\s]*62']</span>
+
+test_bn_consulting.py:191: AssertionError
+</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row failed" id="test_bn_consulting.py::test_member_area_explains_private_access">
+        <tr class="collapsible" data-id="test_14">
+        <td class="col-result">Failed</td><td class="col-testId">test_bn_consulting.py::test_member_area_explains_private_access</td><td class="col-duration">95 ms</td><td class="col-links"></td></tr>
+        <tr class="extras-row">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">http_session = &lt;requests.sessions.Session object at 0x000002380BD1DA90&gt;
+
+    def test_member_area_explains_private_access(http_session: requests.Session) -&gt; None:
+        page = fetch_page(http_session, "/zona-pentru-membri/")
+        text = visible_page_text(page.soup)
+    
+        assert "membri" in text
+        assert "cont" in text
+&gt;       assert "pagini private" in text or "conținut" in text or "continut" in text
+<span class="error">E       AssertionError: assert ('pagini private' in 'zona pentru membri :: bn.consulting2016 best network consulting srl resita pagina de start despre noi echipa contact zona pentru membri mai mult meniu zona pentru membri inregistrare această pagină este privată și doar membrii înregistrați o pot accesa. puteți începe să scrieți făcând click aici. bn consulting srl , resita, 320038, +40 774 903 493 ; 0727 253 635 ; whatsapp 0774 903 493 creat cu webnode cookie-uri folosim cookie-uri pentru a permite funcționarea corectă și sigură a site-urilor noastre și pentru a vă oferi cea mai bună experiență de utilizare. acceptați doar ce e necesar acceptați toate setări avansate puteți personaliza preferințele cookie aici. activați sau dezactivați următoarele categorii și salvați-vă selecția. cookie-uri esențiale cookie-urile esențiale sunt necesare pentru buna și corecta funcționare a site-ului nostru și pentru procesul de înregistrare. cookie-uri funcționale cookie-urile funcționale rețin preferințele dvs. pentru site-ul nostru și permit personalizarea lui. cookie-uri de performață cookie-urile de performanță monitorizează performața site-ului. cookie-uri de marketing/ părți terțe cookie-urile de marketing ne permit să măsurăm și analizăm performanța site-ului nostru. salvați' or 'conținut' in 'zona pentru membri :: bn.consulting2016 best network consulting srl resita pagina de start despre noi echipa contact zona pentru membri mai mult meniu zona pentru membri inregistrare această pagină este privată și doar membrii înregistrați o pot accesa. puteți începe să scrieți făcând click aici. bn consulting srl , resita, 320038, +40 774 903 493 ; 0727 253 635 ; whatsapp 0774 903 493 creat cu webnode cookie-uri folosim cookie-uri pentru a permite funcționarea corectă și sigură a site-urilor noastre și pentru a vă oferi cea mai bună experiență de utilizare. acceptați doar ce e necesar acceptați toate setări avansate puteți personaliza preferințele cookie aici. activați sau dezactivați următoarele categorii și salvați-vă selecția. cookie-uri esențiale cookie-urile esențiale sunt necesare pentru buna și corecta funcționare a site-ului nostru și pentru procesul de înregistrare. cookie-uri funcționale cookie-urile funcționale rețin preferințele dvs. pentru site-ul nostru și permit personalizarea lui. cookie-uri de performață cookie-urile de performanță monitorizează performața site-ului. cookie-uri de marketing/ părți terțe cookie-urile de marketing ne permit să măsurăm și analizăm performanța site-ului nostru. salvați' or 'continut' in 'zona pentru membri :: bn.consulting2016 best network consulting srl resita pagina de start despre noi echipa contact zona pentru membri mai mult meniu zona pentru membri inregistrare această pagină este privată și doar membrii înregistrați o pot accesa. puteți începe să scrieți făcând click aici. bn consulting srl , resita, 320038, +40 774 903 493 ; 0727 253 635 ; whatsapp 0774 903 493 creat cu webnode cookie-uri folosim cookie-uri pentru a permite funcționarea corectă și sigură a site-urilor noastre și pentru a vă oferi cea mai bună experiență de utilizare. acceptați doar ce e necesar acceptați toate setări avansate puteți personaliza preferințele cookie aici. activați sau dezactivați următoarele categorii și salvați-vă selecția. cookie-uri esențiale cookie-urile esențiale sunt necesare pentru buna și corecta funcționare a site-ului nostru și pentru procesul de înregistrare. cookie-uri funcționale cookie-urile funcționale rețin preferințele dvs. pentru site-ul nostru și permit personalizarea lui. cookie-uri de performață cookie-urile de performanță monitorizează performața site-ului. cookie-uri de marketing/ părți terțe cookie-urile de marketing ne permit să măsurăm și analizăm performanța site-ului nostru. salvați')</span>
+
+test_bn_consulting.py:211: AssertionError
+</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row failed" id="test_bn_consulting.py::test_homepage_assets_are_reachable">
+        <tr class="collapsible" data-id="test_17">
+        <td class="col-result">Failed</td><td class="col-testId">test_bn_consulting.py::test_homepage_assets_are_reachable</td><td class="col-duration">00:00:17</td><td class="col-links"></td></tr>
+        <tr class="extras-row">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">http_session = &lt;requests.sessions.Session object at 0x000002380BD1DA90&gt;
+
+    def test_homepage_assets_are_reachable(http_session: requests.Session) -&gt; None:
+        page = fetch_page(http_session, "/")
+        assets = asset_urls_from(page.html, page.url)
+    
+        assert assets, "Nu am gasit fisiere statice / imagini pe homepage"
+        broken: list[str] = []
+        for asset in sorted(assets)[:40]:  # limita ca testul sa ramana rapid
+            try:
+                response = http_session.get(asset, timeout=REQUEST_TIMEOUT, allow_redirects=True, stream=True)
+                if response.status_code &gt;= 400:
+                    broken.append(f"{asset} -&gt; {response.status_code}")
+            except requests.RequestException as exc:
+                broken.append(f"{asset} -&gt; {exc.__class__.__name__}")
+    
+&gt;       assert not broken, "Resurse statice defecte:\n" + "\n".join(broken)
+<span class="error">E       AssertionError: Resurse statice defecte:</span>
+<span class="error">E         https://fonts.gstatic.com -&gt; 404</span>
+<span class="error">E       assert not ['https://fonts.gstatic.com -&gt; 404']</span>
+
+test_bn_consulting.py:261: AssertionError
+</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row failed" id="test_bn_consulting.py::test_images_have_alt_text_on_public_pages">
+        <tr class="collapsible" data-id="test_18">
+        <td class="col-result">Failed</td><td class="col-testId">test_bn_consulting.py::test_images_have_alt_text_on_public_pages</td><td class="col-duration">00:00:01</td><td class="col-links"></td></tr>
+        <tr class="extras-row">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">http_session = &lt;requests.sessions.Session object at 0x000002380BD1DA90&gt;
+
+    def test_images_have_alt_text_on_public_pages(http_session: requests.Session) -&gt; None:
+        pages_with_missing_alt: dict[str, int] = {}
+    
+        for path in PUBLIC_PAGES.values():
+            page = fetch_page(http_session, path)
+            missing_alt = [img for img in page.soup.find_all("img") if not img.get("alt", "").strip()]
+            if missing_alt:
+                pages_with_missing_alt[path] = len(missing_alt)
+    
+&gt;       assert not pages_with_missing_alt, (
+            "Exista imagini fara atribut alt. Recomandat pentru accesibilitate si SEO: "
+            f"{pages_with_missing_alt}"
+        )
+<span class="error">E       AssertionError: Exista imagini fara atribut alt. Recomandat pentru accesibilitate si SEO: {'/': 14, '/despre-noi/': 25, '/echipa/': 5, '/contact/': 4, '/zona-pentru-membri/': 2}</span>
+<span class="error">E       assert not {'/': 14, '/despre-noi/': 25, '/echipa/': 5, '/contact/': 4, ...}</span>
+
+test_bn_consulting.py:273: AssertionError
+</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row failed" id="test_bn_consulting.py::test_navigation_works_in_real_browser">
+        <tr class="collapsible" data-id="test_20">
+        <td class="col-result">Failed</td><td class="col-testId">test_bn_consulting.py::test_navigation_works_in_real_browser</td><td class="col-duration">407 ms</td><td class="col-links"></td></tr>
+        <tr class="extras-row">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">driver = &lt;selenium.webdriver.chrome.webdriver.WebDriver (session="fbfe2e0482effa86db33e1e5faa4ce0f")&gt;
+
+    def test_navigation_works_in_real_browser(driver) -&gt; None:
+        from selenium.webdriver.common.by import By
+    
+        driver.get(BASE_URL)
+&gt;       accept_cookie_banner_if_present(driver)
+
+test_bn_consulting.py:334: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+test_bn_consulting.py:317: in accept_cookie_banner_if_present
+    buttons[0].click()
+.venv\Lib\site-packages\selenium\webdriver\remote\webelement.py:114: in click
+    self._execute(Command.CLICK_ELEMENT)
+.venv\Lib\site-packages\selenium\webdriver\remote\webelement.py:508: in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py:492: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x000002380E42EF90&gt;
+response = {'status': 400, 'value': '{"value":{"error":"element not interactable","message":"element not interactable\\n  (Sessio...7+2b97]\\n\\tKERNEL32!BaseThreadInitThunk [0x7ffcb944e957+17]\\n\\tntdll!RtlUserThreadStart [0x7ffcbaa67c1c+2c]\\n"}}'}
+
+    def check_response(self, response: dict[str, Any]) -&gt; None:
+        """Check that a JSON response from the WebDriver does not have an error.
+    
+        Args:
+            response: The JSON response from the WebDriver server as a dictionary
+                object.
+    
+        Raises:
+            WebDriverException: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                try:
+                    value = json.loads(value_json)
+                    if isinstance(value, dict):
+                        if len(value) == 1:
+                            value = value["value"]
+                        status = value.get("error", None)
+                        if not status:
+                            status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                            message = value.get("value") or value.get("message")
+                            if not isinstance(message, str):
+                                value = message
+                                message = message.get("message") if isinstance(message, dict) else None
+                        else:
+                            message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "&lt;anonymous&gt;")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "&lt;anonymous&gt;")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)
+&gt;       raise exception_class(message, screen, stacktrace)
+<span class="error">E       selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable</span>
+<span class="error">E         (Session info: chrome=148.0.7778.179); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception</span>
+<span class="error">E       Stacktrace:</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f87de5+14895]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f87e50+14900]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626ced396]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d48dc4]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d3bce6]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d7005a]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d3b566]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d9486f]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d39df8]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d3ace3]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff62729cc49+3296f9]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff627297375+323e25]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff6272bbc82+348732]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626fa6045+32af5]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626faecec+3b79c]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f91bc4+1e674]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f91d54+1e804]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f760e7+2b97]</span>
+<span class="error">E       	KERNEL32!BaseThreadInitThunk [0x7ffcb944e957+17]</span>
+<span class="error">E       	ntdll!RtlUserThreadStart [0x7ffcbaa67c1c+2c]</span>
+
+.venv\Lib\site-packages\selenium\webdriver\remote\errorhandler.py:232: ElementNotInteractableException
+</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row failed" id="test_bn_consulting.py::test_contact_page_form_is_visible_in_real_browser">
+        <tr class="collapsible" data-id="test_21">
+        <td class="col-result">Failed</td><td class="col-testId">test_bn_consulting.py::test_contact_page_form_is_visible_in_real_browser</td><td class="col-duration">838 ms</td><td class="col-links"></td></tr>
+        <tr class="extras-row">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">driver = &lt;selenium.webdriver.chrome.webdriver.WebDriver (session="fbfe2e0482effa86db33e1e5faa4ce0f")&gt;
+
+    def test_contact_page_form_is_visible_in_real_browser(driver) -&gt; None:
+        from selenium.webdriver.common.by import By
+    
+        driver.get(urljoin(BASE_URL, "/contact/"))
+&gt;       accept_cookie_banner_if_present(driver)
+
+test_bn_consulting.py:344: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+test_bn_consulting.py:317: in accept_cookie_banner_if_present
+    buttons[0].click()
+.venv\Lib\site-packages\selenium\webdriver\remote\webelement.py:114: in click
+    self._execute(Command.CLICK_ELEMENT)
+.venv\Lib\site-packages\selenium\webdriver\remote\webelement.py:508: in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py:492: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x000002380E42EF90&gt;
+response = {'status': 400, 'value': '{"value":{"error":"element not interactable","message":"element not interactable\\n  (Sessio...7+2b97]\\n\\tKERNEL32!BaseThreadInitThunk [0x7ffcb944e957+17]\\n\\tntdll!RtlUserThreadStart [0x7ffcbaa67c1c+2c]\\n"}}'}
+
+    def check_response(self, response: dict[str, Any]) -&gt; None:
+        """Check that a JSON response from the WebDriver does not have an error.
+    
+        Args:
+            response: The JSON response from the WebDriver server as a dictionary
+                object.
+    
+        Raises:
+            WebDriverException: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                try:
+                    value = json.loads(value_json)
+                    if isinstance(value, dict):
+                        if len(value) == 1:
+                            value = value["value"]
+                        status = value.get("error", None)
+                        if not status:
+                            status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                            message = value.get("value") or value.get("message")
+                            if not isinstance(message, str):
+                                value = message
+                                message = message.get("message") if isinstance(message, dict) else None
+                        else:
+                            message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "&lt;anonymous&gt;")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "&lt;anonymous&gt;")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)
+&gt;       raise exception_class(message, screen, stacktrace)
+<span class="error">E       selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable</span>
+<span class="error">E         (Session info: chrome=148.0.7778.179); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception</span>
+<span class="error">E       Stacktrace:</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f87de5+14895]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f87e50+14900]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626ced396]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d48dc4]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d3bce6]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d7005a]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d3b566]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d9486f]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d39df8]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d3ace3]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff62729cc49+3296f9]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff627297375+323e25]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff6272bbc82+348732]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626fa6045+32af5]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626faecec+3b79c]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f91bc4+1e674]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f91d54+1e804]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f760e7+2b97]</span>
+<span class="error">E       	KERNEL32!BaseThreadInitThunk [0x7ffcb944e957+17]</span>
+<span class="error">E       	ntdll!RtlUserThreadStart [0x7ffcbaa67c1c+2c]</span>
+
+.venv\Lib\site-packages\selenium\webdriver\remote\errorhandler.py:232: ElementNotInteractableException
+</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row failed" id="test_bn_consulting.py::test_homepage_is_responsive_at_common_viewports[390-844]">
+        <tr class="collapsible" data-id="test_22">
+        <td class="col-result">Failed</td><td class="col-testId">test_bn_consulting.py::test_homepage_is_responsive_at_common_viewports[390-844]</td><td class="col-duration">841 ms</td><td class="col-links"></td></tr>
+        <tr class="extras-row">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">driver = &lt;selenium.webdriver.chrome.webdriver.WebDriver (session="fbfe2e0482effa86db33e1e5faa4ce0f")&gt;, width = 390, height = 844
+
+    @pytest.mark.parametrize(
+        "width,height",
+        [(390, 844), (768, 1024), (1366, 900)],
+    )
+    def test_homepage_is_responsive_at_common_viewports(driver, width: int, height: int) -&gt; None:
+        from selenium.webdriver.common.by import By
+    
+        driver.set_window_size(width, height)
+        driver.get(BASE_URL)
+&gt;       accept_cookie_banner_if_present(driver)
+
+test_bn_consulting.py:362: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+test_bn_consulting.py:317: in accept_cookie_banner_if_present
+    buttons[0].click()
+.venv\Lib\site-packages\selenium\webdriver\remote\webelement.py:114: in click
+    self._execute(Command.CLICK_ELEMENT)
+.venv\Lib\site-packages\selenium\webdriver\remote\webelement.py:508: in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py:492: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x000002380E42EF90&gt;
+response = {'status': 400, 'value': '{"value":{"error":"element not interactable","message":"element not interactable\\n  (Sessio...7+2b97]\\n\\tKERNEL32!BaseThreadInitThunk [0x7ffcb944e957+17]\\n\\tntdll!RtlUserThreadStart [0x7ffcbaa67c1c+2c]\\n"}}'}
+
+    def check_response(self, response: dict[str, Any]) -&gt; None:
+        """Check that a JSON response from the WebDriver does not have an error.
+    
+        Args:
+            response: The JSON response from the WebDriver server as a dictionary
+                object.
+    
+        Raises:
+            WebDriverException: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                try:
+                    value = json.loads(value_json)
+                    if isinstance(value, dict):
+                        if len(value) == 1:
+                            value = value["value"]
+                        status = value.get("error", None)
+                        if not status:
+                            status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                            message = value.get("value") or value.get("message")
+                            if not isinstance(message, str):
+                                value = message
+                                message = message.get("message") if isinstance(message, dict) else None
+                        else:
+                            message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "&lt;anonymous&gt;")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "&lt;anonymous&gt;")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)
+&gt;       raise exception_class(message, screen, stacktrace)
+<span class="error">E       selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable</span>
+<span class="error">E         (Session info: chrome=148.0.7778.179); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception</span>
+<span class="error">E       Stacktrace:</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f87de5+14895]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f87e50+14900]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626ced396]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d48dc4]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d3bce6]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d7005a]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d3b566]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d9486f]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d39df8]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d3ace3]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff62729cc49+3296f9]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff627297375+323e25]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff6272bbc82+348732]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626fa6045+32af5]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626faecec+3b79c]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f91bc4+1e674]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f91d54+1e804]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f760e7+2b97]</span>
+<span class="error">E       	KERNEL32!BaseThreadInitThunk [0x7ffcb944e957+17]</span>
+<span class="error">E       	ntdll!RtlUserThreadStart [0x7ffcbaa67c1c+2c]</span>
+
+.venv\Lib\site-packages\selenium\webdriver\remote\errorhandler.py:232: ElementNotInteractableException
+</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row failed" id="test_bn_consulting.py::test_homepage_is_responsive_at_common_viewports[768-1024]">
+        <tr class="collapsible" data-id="test_23">
+        <td class="col-result">Failed</td><td class="col-testId">test_bn_consulting.py::test_homepage_is_responsive_at_common_viewports[768-1024]</td><td class="col-duration">480 ms</td><td class="col-links"></td></tr>
+        <tr class="extras-row">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">driver = &lt;selenium.webdriver.chrome.webdriver.WebDriver (session="fbfe2e0482effa86db33e1e5faa4ce0f")&gt;, width = 768, height = 1024
+
+    @pytest.mark.parametrize(
+        "width,height",
+        [(390, 844), (768, 1024), (1366, 900)],
+    )
+    def test_homepage_is_responsive_at_common_viewports(driver, width: int, height: int) -&gt; None:
+        from selenium.webdriver.common.by import By
+    
+        driver.set_window_size(width, height)
+        driver.get(BASE_URL)
+&gt;       accept_cookie_banner_if_present(driver)
+
+test_bn_consulting.py:362: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+test_bn_consulting.py:317: in accept_cookie_banner_if_present
+    buttons[0].click()
+.venv\Lib\site-packages\selenium\webdriver\remote\webelement.py:114: in click
+    self._execute(Command.CLICK_ELEMENT)
+.venv\Lib\site-packages\selenium\webdriver\remote\webelement.py:508: in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py:492: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x000002380E42EF90&gt;
+response = {'status': 400, 'value': '{"value":{"error":"element not interactable","message":"element not interactable\\n  (Sessio...7+2b97]\\n\\tKERNEL32!BaseThreadInitThunk [0x7ffcb944e957+17]\\n\\tntdll!RtlUserThreadStart [0x7ffcbaa67c1c+2c]\\n"}}'}
+
+    def check_response(self, response: dict[str, Any]) -&gt; None:
+        """Check that a JSON response from the WebDriver does not have an error.
+    
+        Args:
+            response: The JSON response from the WebDriver server as a dictionary
+                object.
+    
+        Raises:
+            WebDriverException: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                try:
+                    value = json.loads(value_json)
+                    if isinstance(value, dict):
+                        if len(value) == 1:
+                            value = value["value"]
+                        status = value.get("error", None)
+                        if not status:
+                            status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                            message = value.get("value") or value.get("message")
+                            if not isinstance(message, str):
+                                value = message
+                                message = message.get("message") if isinstance(message, dict) else None
+                        else:
+                            message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "&lt;anonymous&gt;")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "&lt;anonymous&gt;")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)
+&gt;       raise exception_class(message, screen, stacktrace)
+<span class="error">E       selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable</span>
+<span class="error">E         (Session info: chrome=148.0.7778.179); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception</span>
+<span class="error">E       Stacktrace:</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f87de5+14895]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f87e50+14900]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626ced396]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d48dc4]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d3bce6]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d7005a]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d3b566]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d9486f]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d39df8]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d3ace3]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff62729cc49+3296f9]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff627297375+323e25]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff6272bbc82+348732]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626fa6045+32af5]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626faecec+3b79c]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f91bc4+1e674]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f91d54+1e804]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f760e7+2b97]</span>
+<span class="error">E       	KERNEL32!BaseThreadInitThunk [0x7ffcb944e957+17]</span>
+<span class="error">E       	ntdll!RtlUserThreadStart [0x7ffcbaa67c1c+2c]</span>
+
+.venv\Lib\site-packages\selenium\webdriver\remote\errorhandler.py:232: ElementNotInteractableException
+</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row failed" id="test_bn_consulting.py::test_homepage_is_responsive_at_common_viewports[1366-900]">
+        <tr class="collapsible" data-id="test_24">
+        <td class="col-result">Failed</td><td class="col-testId">test_bn_consulting.py::test_homepage_is_responsive_at_common_viewports[1366-900]</td><td class="col-duration">00:00:03</td><td class="col-links"></td></tr>
+        <tr class="extras-row">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">driver = &lt;selenium.webdriver.chrome.webdriver.WebDriver (session="fbfe2e0482effa86db33e1e5faa4ce0f")&gt;, width = 1366, height = 900
+
+    @pytest.mark.parametrize(
+        "width,height",
+        [(390, 844), (768, 1024), (1366, 900)],
+    )
+    def test_homepage_is_responsive_at_common_viewports(driver, width: int, height: int) -&gt; None:
+        from selenium.webdriver.common.by import By
+    
+        driver.set_window_size(width, height)
+        driver.get(BASE_URL)
+&gt;       accept_cookie_banner_if_present(driver)
+
+test_bn_consulting.py:362: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+test_bn_consulting.py:317: in accept_cookie_banner_if_present
+    buttons[0].click()
+.venv\Lib\site-packages\selenium\webdriver\remote\webelement.py:114: in click
+    self._execute(Command.CLICK_ELEMENT)
+.venv\Lib\site-packages\selenium\webdriver\remote\webelement.py:508: in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py:492: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x000002380E42EF90&gt;
+response = {'status': 400, 'value': '{"value":{"error":"element not interactable","message":"element not interactable\\n  (Sessio...7+2b97]\\n\\tKERNEL32!BaseThreadInitThunk [0x7ffcb944e957+17]\\n\\tntdll!RtlUserThreadStart [0x7ffcbaa67c1c+2c]\\n"}}'}
+
+    def check_response(self, response: dict[str, Any]) -&gt; None:
+        """Check that a JSON response from the WebDriver does not have an error.
+    
+        Args:
+            response: The JSON response from the WebDriver server as a dictionary
+                object.
+    
+        Raises:
+            WebDriverException: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                try:
+                    value = json.loads(value_json)
+                    if isinstance(value, dict):
+                        if len(value) == 1:
+                            value = value["value"]
+                        status = value.get("error", None)
+                        if not status:
+                            status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                            message = value.get("value") or value.get("message")
+                            if not isinstance(message, str):
+                                value = message
+                                message = message.get("message") if isinstance(message, dict) else None
+                        else:
+                            message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "&lt;anonymous&gt;")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "&lt;anonymous&gt;")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)
+&gt;       raise exception_class(message, screen, stacktrace)
+<span class="error">E       selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable</span>
+<span class="error">E         (Session info: chrome=148.0.7778.179); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception</span>
+<span class="error">E       Stacktrace:</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f87de5+14895]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f87e50+14900]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626ced396]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d48dc4]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d3bce6]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d7005a]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d3b566]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d9486f]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d39df8]</span>
+<span class="error">E       	chromedriver!(No symbol) [0x7ff626d3ace3]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff62729cc49+3296f9]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff627297375+323e25]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff6272bbc82+348732]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626fa6045+32af5]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626faecec+3b79c]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f91bc4+1e674]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f91d54+1e804]</span>
+<span class="error">E       	chromedriver!GetHandleVerifier [0x7ff626f760e7+2b97]</span>
+<span class="error">E       	KERNEL32!BaseThreadInitThunk [0x7ffcb944e957+17]</span>
+<span class="error">E       	ntdll!RtlUserThreadStart [0x7ffcbaa67c1c+2c]</span>
+
+.venv\Lib\site-packages\selenium\webdriver\remote\errorhandler.py:232: ElementNotInteractableException
+</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row passed" id="test_bn_consulting.py::test_public_pages_return_success_fast_and_html[home-/]">
+        <tr class="collapsible" data-id="test_0">
+        <td class="col-result collapsed">Passed</td><td class="col-testId">test_bn_consulting.py::test_public_pages_return_success_fast_and_html[home-/]</td><td class="col-duration">951 ms</td><td class="col-links"></td></tr>
+        <tr class="extras-row hidden">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">No log output captured.</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row passed" id="test_bn_consulting.py::test_public_pages_return_success_fast_and_html[despre_noi-/despre-noi/]">
+        <tr class="collapsible" data-id="test_1">
+        <td class="col-result collapsed">Passed</td><td class="col-testId">test_bn_consulting.py::test_public_pages_return_success_fast_and_html[despre_noi-/despre-noi/]</td><td class="col-duration">207 ms</td><td class="col-links"></td></tr>
+        <tr class="extras-row hidden">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">No log output captured.</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row passed" id="test_bn_consulting.py::test_public_pages_return_success_fast_and_html[echipa-/echipa/]">
+        <tr class="collapsible" data-id="test_2">
+        <td class="col-result collapsed">Passed</td><td class="col-testId">test_bn_consulting.py::test_public_pages_return_success_fast_and_html[echipa-/echipa/]</td><td class="col-duration">180 ms</td><td class="col-links"></td></tr>
+        <tr class="extras-row hidden">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">No log output captured.</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row passed" id="test_bn_consulting.py::test_public_pages_return_success_fast_and_html[contact-/contact/]">
+        <tr class="collapsible" data-id="test_3">
+        <td class="col-result collapsed">Passed</td><td class="col-testId">test_bn_consulting.py::test_public_pages_return_success_fast_and_html[contact-/contact/]</td><td class="col-duration">190 ms</td><td class="col-links"></td></tr>
+        <tr class="extras-row hidden">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">No log output captured.</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row passed" id="test_bn_consulting.py::test_public_pages_return_success_fast_and_html[zona_pentru_membri-/zona-pentru-membri/]">
+        <tr class="collapsible" data-id="test_4">
+        <td class="col-result collapsed">Passed</td><td class="col-testId">test_bn_consulting.py::test_public_pages_return_success_fast_and_html[zona_pentru_membri-/zona-pentru-membri/]</td><td class="col-duration">180 ms</td><td class="col-links"></td></tr>
+        <tr class="extras-row hidden">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">No log output captured.</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row passed" id="test_bn_consulting.py::test_public_pages_contain_expected_business_content[/-expected_fragments0]">
+        <tr class="collapsible" data-id="test_5">
+        <td class="col-result collapsed">Passed</td><td class="col-testId">test_bn_consulting.py::test_public_pages_contain_expected_business_content[/-expected_fragments0]</td><td class="col-duration">109 ms</td><td class="col-links"></td></tr>
+        <tr class="extras-row hidden">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">No log output captured.</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row passed" id="test_bn_consulting.py::test_public_pages_contain_expected_business_content[/despre-noi/-expected_fragments1]">
+        <tr class="collapsible" data-id="test_6">
+        <td class="col-result collapsed">Passed</td><td class="col-testId">test_bn_consulting.py::test_public_pages_contain_expected_business_content[/despre-noi/-expected_fragments1]</td><td class="col-duration">112 ms</td><td class="col-links"></td></tr>
+        <tr class="extras-row hidden">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">No log output captured.</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row passed" id="test_bn_consulting.py::test_public_pages_contain_expected_business_content[/echipa/-expected_fragments2]">
+        <tr class="collapsible" data-id="test_7">
+        <td class="col-result collapsed">Passed</td><td class="col-testId">test_bn_consulting.py::test_public_pages_contain_expected_business_content[/echipa/-expected_fragments2]</td><td class="col-duration">113 ms</td><td class="col-links"></td></tr>
+        <tr class="extras-row hidden">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">No log output captured.</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row passed" id="test_bn_consulting.py::test_public_pages_contain_expected_business_content[/contact/-expected_fragments3]">
+        <tr class="collapsible" data-id="test_8">
+        <td class="col-result collapsed">Passed</td><td class="col-testId">test_bn_consulting.py::test_public_pages_contain_expected_business_content[/contact/-expected_fragments3]</td><td class="col-duration">113 ms</td><td class="col-links"></td></tr>
+        <tr class="extras-row hidden">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">No log output captured.</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row passed" id="test_bn_consulting.py::test_http_redirects_or_resolves_to_https">
+        <tr class="collapsible" data-id="test_10">
+        <td class="col-result collapsed">Passed</td><td class="col-testId">test_bn_consulting.py::test_http_redirects_or_resolves_to_https</td><td class="col-duration">207 ms</td><td class="col-links"></td></tr>
+        <tr class="extras-row hidden">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">No log output captured.</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row passed" id="test_bn_consulting.py::test_main_navigation_links_are_present_on_homepage">
+        <tr class="collapsible" data-id="test_11">
+        <td class="col-result collapsed">Passed</td><td class="col-testId">test_bn_consulting.py::test_main_navigation_links_are_present_on_homepage</td><td class="col-duration">116 ms</td><td class="col-links"></td></tr>
+        <tr class="extras-row hidden">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">No log output captured.</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row passed" id="test_bn_consulting.py::test_contact_form_fields_exist_without_submitting">
+        <tr class="collapsible" data-id="test_13">
+        <td class="col-result collapsed">Passed</td><td class="col-testId">test_bn_consulting.py::test_contact_form_fields_exist_without_submitting</td><td class="col-duration">106 ms</td><td class="col-links"></td></tr>
+        <tr class="extras-row hidden">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">No log output captured.</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row passed" id="test_bn_consulting.py::test_each_public_page_has_basic_seo_elements">
+        <tr class="collapsible" data-id="test_15">
+        <td class="col-result collapsed">Passed</td><td class="col-testId">test_bn_consulting.py::test_each_public_page_has_basic_seo_elements</td><td class="col-duration">527 ms</td><td class="col-links"></td></tr>
+        <tr class="extras-row hidden">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">No log output captured.</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row passed" id="test_bn_consulting.py::test_homepage_internal_links_are_not_broken">
+        <tr class="collapsible" data-id="test_16">
+        <td class="col-result collapsed">Passed</td><td class="col-testId">test_bn_consulting.py::test_homepage_internal_links_are_not_broken</td><td class="col-duration">543 ms</td><td class="col-links"></td></tr>
+        <tr class="extras-row hidden">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">No log output captured.</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    
+      <tbody class="results-table-row passed" id="test_bn_consulting.py::test_homepage_renders_in_real_browser">
+        <tr class="collapsible" data-id="test_19">
+        <td class="col-result collapsed">Passed</td><td class="col-testId">test_bn_consulting.py::test_homepage_renders_in_real_browser</td><td class="col-duration">00:00:04</td><td class="col-links"></td></tr>
+        <tr class="extras-row hidden">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media hidden">
+              <div class="media-container">
+                  <div class="media-container__nav--left">&lt;</div>
+                  <div class="media-container__viewport">
+                    <img src="http://localhost:63342/BN%20Consulting/raport_testare.html?_ijt=nv6hvhv7gsl5h9ij0qcaetkjtt&amp;_ij_reload=RELOAD_ON_SAVE&amp;sort=result">
+                    <video controls="">
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">&gt;</div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log">No log output captured.</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  <footer>
+    <div id="data-container" data-jsonblob="{&quot;environment&quot;: {&quot;Python&quot;: &quot;3.13.14&quot;, &quot;Platform&quot;: &quot;Windows-11-10.0.26100-SP0&quot;, &quot;Packages&quot;: {&quot;pytest&quot;: &quot;9.1.0&quot;, &quot;pluggy&quot;: &quot;1.6.0&quot;}, &quot;Plugins&quot;: {&quot;html&quot;: &quot;4.2.0&quot;, &quot;metadata&quot;: &quot;3.1.1&quot;}}, &quot;tests&quot;: {&quot;test_bn_consulting.py::test_public_pages_return_success_fast_and_html[home-/]&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Passed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_public_pages_return_success_fast_and_html[home-/]&quot;, &quot;duration&quot;: &quot;951 ms&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Passed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_public_pages_return_success_fast_and_html[home-/]&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;951 ms&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;No log output captured.&quot;}], &quot;test_bn_consulting.py::test_public_pages_return_success_fast_and_html[despre_noi-/despre-noi/]&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Passed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_public_pages_return_success_fast_and_html[despre_noi-/despre-noi/]&quot;, &quot;duration&quot;: &quot;207 ms&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Passed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_public_pages_return_success_fast_and_html[despre_noi-/despre-noi/]&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;207 ms&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;No log output captured.&quot;}], &quot;test_bn_consulting.py::test_public_pages_return_success_fast_and_html[echipa-/echipa/]&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Passed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_public_pages_return_success_fast_and_html[echipa-/echipa/]&quot;, &quot;duration&quot;: &quot;180 ms&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Passed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_public_pages_return_success_fast_and_html[echipa-/echipa/]&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;180 ms&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;No log output captured.&quot;}], &quot;test_bn_consulting.py::test_public_pages_return_success_fast_and_html[contact-/contact/]&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Passed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_public_pages_return_success_fast_and_html[contact-/contact/]&quot;, &quot;duration&quot;: &quot;190 ms&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Passed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_public_pages_return_success_fast_and_html[contact-/contact/]&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;190 ms&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;No log output captured.&quot;}], &quot;test_bn_consulting.py::test_public_pages_return_success_fast_and_html[zona_pentru_membri-/zona-pentru-membri/]&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Passed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_public_pages_return_success_fast_and_html[zona_pentru_membri-/zona-pentru-membri/]&quot;, &quot;duration&quot;: &quot;180 ms&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Passed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_public_pages_return_success_fast_and_html[zona_pentru_membri-/zona-pentru-membri/]&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;180 ms&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;No log output captured.&quot;}], &quot;test_bn_consulting.py::test_public_pages_contain_expected_business_content[/-expected_fragments0]&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Passed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_public_pages_contain_expected_business_content[/-expected_fragments0]&quot;, &quot;duration&quot;: &quot;109 ms&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Passed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_public_pages_contain_expected_business_content[/-expected_fragments0]&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;109 ms&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;No log output captured.&quot;}], &quot;test_bn_consulting.py::test_public_pages_contain_expected_business_content[/despre-noi/-expected_fragments1]&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Passed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_public_pages_contain_expected_business_content[/despre-noi/-expected_fragments1]&quot;, &quot;duration&quot;: &quot;112 ms&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Passed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_public_pages_contain_expected_business_content[/despre-noi/-expected_fragments1]&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;112 ms&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;No log output captured.&quot;}], &quot;test_bn_consulting.py::test_public_pages_contain_expected_business_content[/echipa/-expected_fragments2]&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Passed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_public_pages_contain_expected_business_content[/echipa/-expected_fragments2]&quot;, &quot;duration&quot;: &quot;113 ms&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Passed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_public_pages_contain_expected_business_content[/echipa/-expected_fragments2]&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;113 ms&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;No log output captured.&quot;}], &quot;test_bn_consulting.py::test_public_pages_contain_expected_business_content[/contact/-expected_fragments3]&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Passed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_public_pages_contain_expected_business_content[/contact/-expected_fragments3]&quot;, &quot;duration&quot;: &quot;113 ms&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Passed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_public_pages_contain_expected_business_content[/contact/-expected_fragments3]&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;113 ms&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;No log output captured.&quot;}], &quot;test_bn_consulting.py::test_public_pages_contain_expected_business_content[/zona-pentru-membri/-expected_fragments4]&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Failed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_public_pages_contain_expected_business_content[/zona-pentru-membri/-expected_fragments4]&quot;, &quot;duration&quot;: &quot;99 ms&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Failed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_public_pages_contain_expected_business_content[/zona-pentru-membri/-expected_fragments4]&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;99 ms&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;http_session = &amp;lt;requests.sessions.Session object at 0x000002380BD1DA90&amp;gt;, path = &amp;#x27;/zona-pentru-membri/&amp;#x27;, expected_fragments = [&amp;#x27;membri&amp;#x27;, &amp;#x27;cont&amp;#x27;, &amp;#x27;pagini private&amp;#x27;]\n\n    @pytest.mark.parametrize(&amp;quot;path,expected_fragments&amp;quot;, EXPECTED_TEXT.items())\n    def test_public_pages_contain_expected_business_content(\n        http_session: requests.Session, path: str, expected_fragments: list[str]\n    ) -&amp;gt; None:\n        page = fetch_page(http_session, path)\n&amp;gt;       assert_text_contains_all(visible_page_text(page.soup), expected_fragments)\n\ntest_bn_consulting.py:166: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\npage_text = &amp;#x27;zona pentru membri :: bn.consulting2016 best network consulting srl resita pagina de start despre noi echipa contact ...arketing/ p\u0103r\u021bi ter\u021be cookie-urile de marketing ne permit s\u0103 m\u0103sur\u0103m \u0219i analiz\u0103m performan\u021ba site-ului nostru. salva\u021bi&amp;#x27;\nexpected_fragments = [&amp;#x27;membri&amp;#x27;, &amp;#x27;cont&amp;#x27;, &amp;#x27;pagini private&amp;#x27;]\n\n    def assert_text_contains_all(page_text: str, expected_fragments: Iterable[str]) -&amp;gt; None:\n        missing = [fragment for fragment in expected_fragments if normalize_text(fragment) not in page_text]\n&amp;gt;       assert not missing, f&amp;quot;Lipsesc din pagina urmatoarele texte asteptate: {missing}&amp;quot;\nE       AssertionError: Lipsesc din pagina urmatoarele texte asteptate: [&amp;#x27;pagini private&amp;#x27;]\nE       assert not [&amp;#x27;pagini private&amp;#x27;]\n\ntest_bn_consulting.py:146: AssertionError\n&quot;}], &quot;test_bn_consulting.py::test_http_redirects_or_resolves_to_https&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Passed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_http_redirects_or_resolves_to_https&quot;, &quot;duration&quot;: &quot;207 ms&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Passed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_http_redirects_or_resolves_to_https&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;207 ms&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;No log output captured.&quot;}], &quot;test_bn_consulting.py::test_main_navigation_links_are_present_on_homepage&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Passed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_main_navigation_links_are_present_on_homepage&quot;, &quot;duration&quot;: &quot;116 ms&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Passed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_main_navigation_links_are_present_on_homepage&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;116 ms&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;No log output captured.&quot;}], &quot;test_bn_consulting.py::test_contact_information_is_visible&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Failed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_contact_information_is_visible&quot;, &quot;duration&quot;: &quot;109 ms&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Failed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_contact_information_is_visible&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;109 ms&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;http_session = &amp;lt;requests.sessions.Session object at 0x000002380BD1DA90&amp;gt;\n\n    def test_contact_information_is_visible(http_session: requests.Session) -&amp;gt; None:\n        page = fetch_page(http_session, &amp;quot;/contact/&amp;quot;)\n        text = visible_page_text(page.soup)\n    \n        for email in CONTACT_EMAILS:\n            assert email.lower() in text, f&amp;quot;Adresa {email} nu este vizibila pe pagina de contact&amp;quot;\n    \n        missing_phones = [pattern for pattern in CONTACT_PHONE_PATTERNS if not re.search(pattern, text)]\n&amp;gt;       assert not missing_phones, f&amp;quot;Unele telefoane asteptate nu au fost gasite: {missing_phones}&amp;quot;\nE       AssertionError: Unele telefoane asteptate nu au fost gasite: [&amp;#x27;0750[\\\\.\\\\s]*27[\\\\.\\\\s]*29[\\\\.\\\\s]*62&amp;#x27;]\nE       assert not [&amp;#x27;0750[\\\\.\\\\s]*27[\\\\.\\\\s]*29[\\\\.\\\\s]*62&amp;#x27;]\n\ntest_bn_consulting.py:191: AssertionError\n&quot;}], &quot;test_bn_consulting.py::test_contact_form_fields_exist_without_submitting&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Passed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_contact_form_fields_exist_without_submitting&quot;, &quot;duration&quot;: &quot;106 ms&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Passed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_contact_form_fields_exist_without_submitting&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;106 ms&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;No log output captured.&quot;}], &quot;test_bn_consulting.py::test_member_area_explains_private_access&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Failed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_member_area_explains_private_access&quot;, &quot;duration&quot;: &quot;95 ms&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Failed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_member_area_explains_private_access&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;95 ms&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;http_session = &amp;lt;requests.sessions.Session object at 0x000002380BD1DA90&amp;gt;\n\n    def test_member_area_explains_private_access(http_session: requests.Session) -&amp;gt; None:\n        page = fetch_page(http_session, &amp;quot;/zona-pentru-membri/&amp;quot;)\n        text = visible_page_text(page.soup)\n    \n        assert &amp;quot;membri&amp;quot; in text\n        assert &amp;quot;cont&amp;quot; in text\n&amp;gt;       assert &amp;quot;pagini private&amp;quot; in text or &amp;quot;con\u021binut&amp;quot; in text or &amp;quot;continut&amp;quot; in text\nE       AssertionError: assert (&amp;#x27;pagini private&amp;#x27; in &amp;#x27;zona pentru membri :: bn.consulting2016 best network consulting srl resita pagina de start despre noi echipa contact zona pentru membri mai mult meniu zona pentru membri inregistrare aceast\u0103 pagin\u0103 este privat\u0103 \u0219i doar membrii \u00eenregistra\u021bi o pot accesa. pute\u021bi \u00eencepe s\u0103 scrie\u021bi f\u0103c\u00e2nd click aici. bn consulting srl , resita, 320038, +40 774 903 493 ; 0727 253 635 ; whatsapp 0774 903 493 creat cu webnode cookie-uri folosim cookie-uri pentru a permite func\u021bionarea corect\u0103 \u0219i sigur\u0103 a site-urilor noastre \u0219i pentru a v\u0103 oferi cea mai bun\u0103 experien\u021b\u0103 de utilizare. accepta\u021bi doar ce e necesar accepta\u021bi toate set\u0103ri avansate pute\u021bi personaliza preferin\u021bele cookie aici. activa\u021bi sau dezactiva\u021bi urm\u0103toarele categorii \u0219i salva\u021bi-v\u0103 selec\u021bia. cookie-uri esen\u021biale cookie-urile esen\u021biale sunt necesare pentru buna \u0219i corecta func\u021bionare a site-ului nostru \u0219i pentru procesul de \u00eenregistrare. cookie-uri func\u021bionale cookie-urile func\u021bionale re\u021bin preferin\u021bele dvs. pentru site-ul nostru \u0219i permit personalizarea lui. cookie-uri de performa\u021b\u0103 cookie-urile de performan\u021b\u0103 monitorizeaz\u0103 performa\u021ba site-ului. cookie-uri de marketing/ p\u0103r\u021bi ter\u021be cookie-urile de marketing ne permit s\u0103 m\u0103sur\u0103m \u0219i analiz\u0103m performan\u021ba site-ului nostru. salva\u021bi&amp;#x27; or &amp;#x27;con\u021binut&amp;#x27; in &amp;#x27;zona pentru membri :: bn.consulting2016 best network consulting srl resita pagina de start despre noi echipa contact zona pentru membri mai mult meniu zona pentru membri inregistrare aceast\u0103 pagin\u0103 este privat\u0103 \u0219i doar membrii \u00eenregistra\u021bi o pot accesa. pute\u021bi \u00eencepe s\u0103 scrie\u021bi f\u0103c\u00e2nd click aici. bn consulting srl , resita, 320038, +40 774 903 493 ; 0727 253 635 ; whatsapp 0774 903 493 creat cu webnode cookie-uri folosim cookie-uri pentru a permite func\u021bionarea corect\u0103 \u0219i sigur\u0103 a site-urilor noastre \u0219i pentru a v\u0103 oferi cea mai bun\u0103 experien\u021b\u0103 de utilizare. accepta\u021bi doar ce e necesar accepta\u021bi toate set\u0103ri avansate pute\u021bi personaliza preferin\u021bele cookie aici. activa\u021bi sau dezactiva\u021bi urm\u0103toarele categorii \u0219i salva\u021bi-v\u0103 selec\u021bia. cookie-uri esen\u021biale cookie-urile esen\u021biale sunt necesare pentru buna \u0219i corecta func\u021bionare a site-ului nostru \u0219i pentru procesul de \u00eenregistrare. cookie-uri func\u021bionale cookie-urile func\u021bionale re\u021bin preferin\u021bele dvs. pentru site-ul nostru \u0219i permit personalizarea lui. cookie-uri de performa\u021b\u0103 cookie-urile de performan\u021b\u0103 monitorizeaz\u0103 performa\u021ba site-ului. cookie-uri de marketing/ p\u0103r\u021bi ter\u021be cookie-urile de marketing ne permit s\u0103 m\u0103sur\u0103m \u0219i analiz\u0103m performan\u021ba site-ului nostru. salva\u021bi&amp;#x27; or &amp;#x27;continut&amp;#x27; in &amp;#x27;zona pentru membri :: bn.consulting2016 best network consulting srl resita pagina de start despre noi echipa contact zona pentru membri mai mult meniu zona pentru membri inregistrare aceast\u0103 pagin\u0103 este privat\u0103 \u0219i doar membrii \u00eenregistra\u021bi o pot accesa. pute\u021bi \u00eencepe s\u0103 scrie\u021bi f\u0103c\u00e2nd click aici. bn consulting srl , resita, 320038, +40 774 903 493 ; 0727 253 635 ; whatsapp 0774 903 493 creat cu webnode cookie-uri folosim cookie-uri pentru a permite func\u021bionarea corect\u0103 \u0219i sigur\u0103 a site-urilor noastre \u0219i pentru a v\u0103 oferi cea mai bun\u0103 experien\u021b\u0103 de utilizare. accepta\u021bi doar ce e necesar accepta\u021bi toate set\u0103ri avansate pute\u021bi personaliza preferin\u021bele cookie aici. activa\u021bi sau dezactiva\u021bi urm\u0103toarele categorii \u0219i salva\u021bi-v\u0103 selec\u021bia. cookie-uri esen\u021biale cookie-urile esen\u021biale sunt necesare pentru buna \u0219i corecta func\u021bionare a site-ului nostru \u0219i pentru procesul de \u00eenregistrare. cookie-uri func\u021bionale cookie-urile func\u021bionale re\u021bin preferin\u021bele dvs. pentru site-ul nostru \u0219i permit personalizarea lui. cookie-uri de performa\u021b\u0103 cookie-urile de performan\u021b\u0103 monitorizeaz\u0103 performa\u021ba site-ului. cookie-uri de marketing/ p\u0103r\u021bi ter\u021be cookie-urile de marketing ne permit s\u0103 m\u0103sur\u0103m \u0219i analiz\u0103m performan\u021ba site-ului nostru. salva\u021bi&amp;#x27;)\n\ntest_bn_consulting.py:211: AssertionError\n&quot;}], &quot;test_bn_consulting.py::test_each_public_page_has_basic_seo_elements&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Passed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_each_public_page_has_basic_seo_elements&quot;, &quot;duration&quot;: &quot;527 ms&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Passed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_each_public_page_has_basic_seo_elements&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;527 ms&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;No log output captured.&quot;}], &quot;test_bn_consulting.py::test_homepage_internal_links_are_not_broken&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Passed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_homepage_internal_links_are_not_broken&quot;, &quot;duration&quot;: &quot;543 ms&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Passed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_homepage_internal_links_are_not_broken&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;543 ms&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;No log output captured.&quot;}], &quot;test_bn_consulting.py::test_homepage_assets_are_reachable&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Failed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_homepage_assets_are_reachable&quot;, &quot;duration&quot;: &quot;00:00:17&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Failed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_homepage_assets_are_reachable&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;00:00:17&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;http_session = &amp;lt;requests.sessions.Session object at 0x000002380BD1DA90&amp;gt;\n\n    def test_homepage_assets_are_reachable(http_session: requests.Session) -&amp;gt; None:\n        page = fetch_page(http_session, &amp;quot;/&amp;quot;)\n        assets = asset_urls_from(page.html, page.url)\n    \n        assert assets, &amp;quot;Nu am gasit fisiere statice / imagini pe homepage&amp;quot;\n        broken: list[str] = []\n        for asset in sorted(assets)[:40]:  # limita ca testul sa ramana rapid\n            try:\n                response = http_session.get(asset, timeout=REQUEST_TIMEOUT, allow_redirects=True, stream=True)\n                if response.status_code &amp;gt;= 400:\n                    broken.append(f&amp;quot;{asset} -&amp;gt; {response.status_code}&amp;quot;)\n            except requests.RequestException as exc:\n                broken.append(f&amp;quot;{asset} -&amp;gt; {exc.__class__.__name__}&amp;quot;)\n    \n&amp;gt;       assert not broken, &amp;quot;Resurse statice defecte:\\n&amp;quot; + &amp;quot;\\n&amp;quot;.join(broken)\nE       AssertionError: Resurse statice defecte:\nE         https://fonts.gstatic.com -&amp;gt; 404\nE       assert not [&amp;#x27;https://fonts.gstatic.com -&amp;gt; 404&amp;#x27;]\n\ntest_bn_consulting.py:261: AssertionError\n&quot;}], &quot;test_bn_consulting.py::test_images_have_alt_text_on_public_pages&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Failed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_images_have_alt_text_on_public_pages&quot;, &quot;duration&quot;: &quot;00:00:01&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Failed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_images_have_alt_text_on_public_pages&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;00:00:01&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;http_session = &amp;lt;requests.sessions.Session object at 0x000002380BD1DA90&amp;gt;\n\n    def test_images_have_alt_text_on_public_pages(http_session: requests.Session) -&amp;gt; None:\n        pages_with_missing_alt: dict[str, int] = {}\n    \n        for path in PUBLIC_PAGES.values():\n            page = fetch_page(http_session, path)\n            missing_alt = [img for img in page.soup.find_all(&amp;quot;img&amp;quot;) if not img.get(&amp;quot;alt&amp;quot;, &amp;quot;&amp;quot;).strip()]\n            if missing_alt:\n                pages_with_missing_alt[path] = len(missing_alt)\n    \n&amp;gt;       assert not pages_with_missing_alt, (\n            &amp;quot;Exista imagini fara atribut alt. Recomandat pentru accesibilitate si SEO: &amp;quot;\n            f&amp;quot;{pages_with_missing_alt}&amp;quot;\n        )\nE       AssertionError: Exista imagini fara atribut alt. Recomandat pentru accesibilitate si SEO: {&amp;#x27;/&amp;#x27;: 14, &amp;#x27;/despre-noi/&amp;#x27;: 25, &amp;#x27;/echipa/&amp;#x27;: 5, &amp;#x27;/contact/&amp;#x27;: 4, &amp;#x27;/zona-pentru-membri/&amp;#x27;: 2}\nE       assert not {&amp;#x27;/&amp;#x27;: 14, &amp;#x27;/despre-noi/&amp;#x27;: 25, &amp;#x27;/echipa/&amp;#x27;: 5, &amp;#x27;/contact/&amp;#x27;: 4, ...}\n\ntest_bn_consulting.py:273: AssertionError\n&quot;}], &quot;test_bn_consulting.py::test_homepage_renders_in_real_browser&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Passed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_homepage_renders_in_real_browser&quot;, &quot;duration&quot;: &quot;00:00:04&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Passed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_homepage_renders_in_real_browser&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;00:00:04&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;No log output captured.&quot;}], &quot;test_bn_consulting.py::test_navigation_works_in_real_browser&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Failed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_navigation_works_in_real_browser&quot;, &quot;duration&quot;: &quot;407 ms&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Failed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_navigation_works_in_real_browser&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;407 ms&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;driver = &amp;lt;selenium.webdriver.chrome.webdriver.WebDriver (session=&amp;quot;fbfe2e0482effa86db33e1e5faa4ce0f&amp;quot;)&amp;gt;\n\n    def test_navigation_works_in_real_browser(driver) -&amp;gt; None:\n        from selenium.webdriver.common.by import By\n    \n        driver.get(BASE_URL)\n&amp;gt;       accept_cookie_banner_if_present(driver)\n\ntest_bn_consulting.py:334: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntest_bn_consulting.py:317: in accept_cookie_banner_if_present\n    buttons[0].click()\n.venv\\Lib\\site-packages\\selenium\\webdriver\\remote\\webelement.py:114: in click\n    self._execute(Command.CLICK_ELEMENT)\n.venv\\Lib\\site-packages\\selenium\\webdriver\\remote\\webelement.py:508: in _execute\n    return self._parent.execute(command, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n.venv\\Lib\\site-packages\\selenium\\webdriver\\remote\\webdriver.py:492: in execute\n    self.error_handler.check_response(response)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = &amp;lt;selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x000002380E42EF90&amp;gt;\nresponse = {&amp;#x27;status&amp;#x27;: 400, &amp;#x27;value&amp;#x27;: &amp;#x27;{&amp;quot;value&amp;quot;:{&amp;quot;error&amp;quot;:&amp;quot;element not interactable&amp;quot;,&amp;quot;message&amp;quot;:&amp;quot;element not interactable\\\\n  (Sessio...7+2b97]\\\\n\\\\tKERNEL32!BaseThreadInitThunk [0x7ffcb944e957+17]\\\\n\\\\tntdll!RtlUserThreadStart [0x7ffcbaa67c1c+2c]\\\\n&amp;quot;}}&amp;#x27;}\n\n    def check_response(self, response: dict[str, Any]) -&amp;gt; None:\n        &amp;quot;&amp;quot;&amp;quot;Check that a JSON response from the WebDriver does not have an error.\n    \n        Args:\n            response: The JSON response from the WebDriver server as a dictionary\n                object.\n    \n        Raises:\n            WebDriverException: If the response contains an error message.\n        &amp;quot;&amp;quot;&amp;quot;\n        status = response.get(&amp;quot;status&amp;quot;, None)\n        if not status or status == ErrorCode.SUCCESS:\n            return\n        value = None\n        message = response.get(&amp;quot;message&amp;quot;, &amp;quot;&amp;quot;)\n        screen: str = response.get(&amp;quot;screen&amp;quot;, &amp;quot;&amp;quot;)\n        stacktrace = None\n        if isinstance(status, int):\n            value_json = response.get(&amp;quot;value&amp;quot;, None)\n            if value_json and isinstance(value_json, str):\n                try:\n                    value = json.loads(value_json)\n                    if isinstance(value, dict):\n                        if len(value) == 1:\n                            value = value[&amp;quot;value&amp;quot;]\n                        status = value.get(&amp;quot;error&amp;quot;, None)\n                        if not status:\n                            status = value.get(&amp;quot;status&amp;quot;, ErrorCode.UNKNOWN_ERROR)\n                            message = value.get(&amp;quot;value&amp;quot;) or value.get(&amp;quot;message&amp;quot;)\n                            if not isinstance(message, str):\n                                value = message\n                                message = message.get(&amp;quot;message&amp;quot;) if isinstance(message, dict) else None\n                        else:\n                            message = value.get(&amp;quot;message&amp;quot;, None)\n                except ValueError:\n                    pass\n    \n        exception_class: type[WebDriverException]\n        e = ErrorCode()\n        error_codes = [item for item in dir(e) if not item.startswith(&amp;quot;__&amp;quot;)]\n        for error_code in error_codes:\n            error_info = getattr(ErrorCode, error_code)\n            if isinstance(error_info, list) and status in error_info:\n                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)\n                break\n        else:\n            exception_class = WebDriverException\n    \n        if not value:\n            value = response[&amp;quot;value&amp;quot;]\n        if isinstance(value, str):\n            raise exception_class(value)\n        if message == &amp;quot;&amp;quot; and &amp;quot;message&amp;quot; in value:\n            message = value[&amp;quot;message&amp;quot;]\n    \n        screen = None  # type: ignore[assignment]\n        if &amp;quot;screen&amp;quot; in value:\n            screen = value[&amp;quot;screen&amp;quot;]\n    \n        stacktrace = None\n        st_value = value.get(&amp;quot;stackTrace&amp;quot;) or value.get(&amp;quot;stacktrace&amp;quot;)\n        if st_value:\n            if isinstance(st_value, str):\n                stacktrace = st_value.split(&amp;quot;\\n&amp;quot;)\n            else:\n                stacktrace = []\n                try:\n                    for frame in st_value:\n                        line = frame.get(&amp;quot;lineNumber&amp;quot;, &amp;quot;&amp;quot;)\n                        file = frame.get(&amp;quot;fileName&amp;quot;, &amp;quot;&amp;lt;anonymous&amp;gt;&amp;quot;)\n                        if line:\n                            file = f&amp;quot;{file}:{line}&amp;quot;\n                        meth = frame.get(&amp;quot;methodName&amp;quot;, &amp;quot;&amp;lt;anonymous&amp;gt;&amp;quot;)\n                        if &amp;quot;className&amp;quot; in frame:\n                            meth = f&amp;quot;{frame[&amp;#x27;className&amp;#x27;]}.{meth}&amp;quot;\n                        msg = &amp;quot;    at %s (%s)&amp;quot;\n                        msg = msg % (meth, file)\n                        stacktrace.append(msg)\n                except TypeError:\n                    pass\n        if exception_class == UnexpectedAlertPresentException:\n            alert_text = None\n            if &amp;quot;data&amp;quot; in value:\n                alert_text = value[&amp;quot;data&amp;quot;].get(&amp;quot;text&amp;quot;)\n            elif &amp;quot;alert&amp;quot; in value:\n                alert_text = value[&amp;quot;alert&amp;quot;].get(&amp;quot;text&amp;quot;)\n            raise exception_class(message, screen, stacktrace, alert_text)\n&amp;gt;       raise exception_class(message, screen, stacktrace)\nE       selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable\nE         (Session info: chrome=148.0.7778.179); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception\nE       Stacktrace:\nE       \tchromedriver!GetHandleVerifier [0x7ff626f87de5+14895]\nE       \tchromedriver!GetHandleVerifier [0x7ff626f87e50+14900]\nE       \tchromedriver!(No symbol) [0x7ff626ced396]\nE       \tchromedriver!(No symbol) [0x7ff626d48dc4]\nE       \tchromedriver!(No symbol) [0x7ff626d3bce6]\nE       \tchromedriver!(No symbol) [0x7ff626d7005a]\nE       \tchromedriver!(No symbol) [0x7ff626d3b566]\nE       \tchromedriver!(No symbol) [0x7ff626d9486f]\nE       \tchromedriver!(No symbol) [0x7ff626d39df8]\nE       \tchromedriver!(No symbol) [0x7ff626d3ace3]\nE       \tchromedriver!GetHandleVerifier [0x7ff62729cc49+3296f9]\nE       \tchromedriver!GetHandleVerifier [0x7ff627297375+323e25]\nE       \tchromedriver!GetHandleVerifier [0x7ff6272bbc82+348732]\nE       \tchromedriver!GetHandleVerifier [0x7ff626fa6045+32af5]\nE       \tchromedriver!GetHandleVerifier [0x7ff626faecec+3b79c]\nE       \tchromedriver!GetHandleVerifier [0x7ff626f91bc4+1e674]\nE       \tchromedriver!GetHandleVerifier [0x7ff626f91d54+1e804]\nE       \tchromedriver!GetHandleVerifier [0x7ff626f760e7+2b97]\nE       \tKERNEL32!BaseThreadInitThunk [0x7ffcb944e957+17]\nE       \tntdll!RtlUserThreadStart [0x7ffcbaa67c1c+2c]\n\n.venv\\Lib\\site-packages\\selenium\\webdriver\\remote\\errorhandler.py:232: ElementNotInteractableException\n&quot;}], &quot;test_bn_consulting.py::test_contact_page_form_is_visible_in_real_browser&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Failed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_contact_page_form_is_visible_in_real_browser&quot;, &quot;duration&quot;: &quot;838 ms&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Failed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_contact_page_form_is_visible_in_real_browser&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;838 ms&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;driver = &amp;lt;selenium.webdriver.chrome.webdriver.WebDriver (session=&amp;quot;fbfe2e0482effa86db33e1e5faa4ce0f&amp;quot;)&amp;gt;\n\n    def test_contact_page_form_is_visible_in_real_browser(driver) -&amp;gt; None:\n        from selenium.webdriver.common.by import By\n    \n        driver.get(urljoin(BASE_URL, &amp;quot;/contact/&amp;quot;))\n&amp;gt;       accept_cookie_banner_if_present(driver)\n\ntest_bn_consulting.py:344: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntest_bn_consulting.py:317: in accept_cookie_banner_if_present\n    buttons[0].click()\n.venv\\Lib\\site-packages\\selenium\\webdriver\\remote\\webelement.py:114: in click\n    self._execute(Command.CLICK_ELEMENT)\n.venv\\Lib\\site-packages\\selenium\\webdriver\\remote\\webelement.py:508: in _execute\n    return self._parent.execute(command, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n.venv\\Lib\\site-packages\\selenium\\webdriver\\remote\\webdriver.py:492: in execute\n    self.error_handler.check_response(response)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = &amp;lt;selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x000002380E42EF90&amp;gt;\nresponse = {&amp;#x27;status&amp;#x27;: 400, &amp;#x27;value&amp;#x27;: &amp;#x27;{&amp;quot;value&amp;quot;:{&amp;quot;error&amp;quot;:&amp;quot;element not interactable&amp;quot;,&amp;quot;message&amp;quot;:&amp;quot;element not interactable\\\\n  (Sessio...7+2b97]\\\\n\\\\tKERNEL32!BaseThreadInitThunk [0x7ffcb944e957+17]\\\\n\\\\tntdll!RtlUserThreadStart [0x7ffcbaa67c1c+2c]\\\\n&amp;quot;}}&amp;#x27;}\n\n    def check_response(self, response: dict[str, Any]) -&amp;gt; None:\n        &amp;quot;&amp;quot;&amp;quot;Check that a JSON response from the WebDriver does not have an error.\n    \n        Args:\n            response: The JSON response from the WebDriver server as a dictionary\n                object.\n    \n        Raises:\n            WebDriverException: If the response contains an error message.\n        &amp;quot;&amp;quot;&amp;quot;\n        status = response.get(&amp;quot;status&amp;quot;, None)\n        if not status or status == ErrorCode.SUCCESS:\n            return\n        value = None\n        message = response.get(&amp;quot;message&amp;quot;, &amp;quot;&amp;quot;)\n        screen: str = response.get(&amp;quot;screen&amp;quot;, &amp;quot;&amp;quot;)\n        stacktrace = None\n        if isinstance(status, int):\n            value_json = response.get(&amp;quot;value&amp;quot;, None)\n            if value_json and isinstance(value_json, str):\n                try:\n                    value = json.loads(value_json)\n                    if isinstance(value, dict):\n                        if len(value) == 1:\n                            value = value[&amp;quot;value&amp;quot;]\n                        status = value.get(&amp;quot;error&amp;quot;, None)\n                        if not status:\n                            status = value.get(&amp;quot;status&amp;quot;, ErrorCode.UNKNOWN_ERROR)\n                            message = value.get(&amp;quot;value&amp;quot;) or value.get(&amp;quot;message&amp;quot;)\n                            if not isinstance(message, str):\n                                value = message\n                                message = message.get(&amp;quot;message&amp;quot;) if isinstance(message, dict) else None\n                        else:\n                            message = value.get(&amp;quot;message&amp;quot;, None)\n                except ValueError:\n                    pass\n    \n        exception_class: type[WebDriverException]\n        e = ErrorCode()\n        error_codes = [item for item in dir(e) if not item.startswith(&amp;quot;__&amp;quot;)]\n        for error_code in error_codes:\n            error_info = getattr(ErrorCode, error_code)\n            if isinstance(error_info, list) and status in error_info:\n                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)\n                break\n        else:\n            exception_class = WebDriverException\n    \n        if not value:\n            value = response[&amp;quot;value&amp;quot;]\n        if isinstance(value, str):\n            raise exception_class(value)\n        if message == &amp;quot;&amp;quot; and &amp;quot;message&amp;quot; in value:\n            message = value[&amp;quot;message&amp;quot;]\n    \n        screen = None  # type: ignore[assignment]\n        if &amp;quot;screen&amp;quot; in value:\n            screen = value[&amp;quot;screen&amp;quot;]\n    \n        stacktrace = None\n        st_value = value.get(&amp;quot;stackTrace&amp;quot;) or value.get(&amp;quot;stacktrace&amp;quot;)\n        if st_value:\n            if isinstance(st_value, str):\n                stacktrace = st_value.split(&amp;quot;\\n&amp;quot;)\n            else:\n                stacktrace = []\n                try:\n                    for frame in st_value:\n                        line = frame.get(&amp;quot;lineNumber&amp;quot;, &amp;quot;&amp;quot;)\n                        file = frame.get(&amp;quot;fileName&amp;quot;, &amp;quot;&amp;lt;anonymous&amp;gt;&amp;quot;)\n                        if line:\n                            file = f&amp;quot;{file}:{line}&amp;quot;\n                        meth = frame.get(&amp;quot;methodName&amp;quot;, &amp;quot;&amp;lt;anonymous&amp;gt;&amp;quot;)\n                        if &amp;quot;className&amp;quot; in frame:\n                            meth = f&amp;quot;{frame[&amp;#x27;className&amp;#x27;]}.{meth}&amp;quot;\n                        msg = &amp;quot;    at %s (%s)&amp;quot;\n                        msg = msg % (meth, file)\n                        stacktrace.append(msg)\n                except TypeError:\n                    pass\n        if exception_class == UnexpectedAlertPresentException:\n            alert_text = None\n            if &amp;quot;data&amp;quot; in value:\n                alert_text = value[&amp;quot;data&amp;quot;].get(&amp;quot;text&amp;quot;)\n            elif &amp;quot;alert&amp;quot; in value:\n                alert_text = value[&amp;quot;alert&amp;quot;].get(&amp;quot;text&amp;quot;)\n            raise exception_class(message, screen, stacktrace, alert_text)\n&amp;gt;       raise exception_class(message, screen, stacktrace)\nE       selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable\nE         (Session info: chrome=148.0.7778.179); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception\nE       Stacktrace:\nE       \tchromedriver!GetHandleVerifier [0x7ff626f87de5+14895]\nE       \tchromedriver!GetHandleVerifier [0x7ff626f87e50+14900]\nE       \tchromedriver!(No symbol) [0x7ff626ced396]\nE       \tchromedriver!(No symbol) [0x7ff626d48dc4]\nE       \tchromedriver!(No symbol) [0x7ff626d3bce6]\nE       \tchromedriver!(No symbol) [0x7ff626d7005a]\nE       \tchromedriver!(No symbol) [0x7ff626d3b566]\nE       \tchromedriver!(No symbol) [0x7ff626d9486f]\nE       \tchromedriver!(No symbol) [0x7ff626d39df8]\nE       \tchromedriver!(No symbol) [0x7ff626d3ace3]\nE       \tchromedriver!GetHandleVerifier [0x7ff62729cc49+3296f9]\nE       \tchromedriver!GetHandleVerifier [0x7ff627297375+323e25]\nE       \tchromedriver!GetHandleVerifier [0x7ff6272bbc82+348732]\nE       \tchromedriver!GetHandleVerifier [0x7ff626fa6045+32af5]\nE       \tchromedriver!GetHandleVerifier [0x7ff626faecec+3b79c]\nE       \tchromedriver!GetHandleVerifier [0x7ff626f91bc4+1e674]\nE       \tchromedriver!GetHandleVerifier [0x7ff626f91d54+1e804]\nE       \tchromedriver!GetHandleVerifier [0x7ff626f760e7+2b97]\nE       \tKERNEL32!BaseThreadInitThunk [0x7ffcb944e957+17]\nE       \tntdll!RtlUserThreadStart [0x7ffcbaa67c1c+2c]\n\n.venv\\Lib\\site-packages\\selenium\\webdriver\\remote\\errorhandler.py:232: ElementNotInteractableException\n&quot;}], &quot;test_bn_consulting.py::test_homepage_is_responsive_at_common_viewports[390-844]&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Failed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_homepage_is_responsive_at_common_viewports[390-844]&quot;, &quot;duration&quot;: &quot;841 ms&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Failed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_homepage_is_responsive_at_common_viewports[390-844]&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;841 ms&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;driver = &amp;lt;selenium.webdriver.chrome.webdriver.WebDriver (session=&amp;quot;fbfe2e0482effa86db33e1e5faa4ce0f&amp;quot;)&amp;gt;, width = 390, height = 844\n\n    @pytest.mark.parametrize(\n        &amp;quot;width,height&amp;quot;,\n        [(390, 844), (768, 1024), (1366, 900)],\n    )\n    def test_homepage_is_responsive_at_common_viewports(driver, width: int, height: int) -&amp;gt; None:\n        from selenium.webdriver.common.by import By\n    \n        driver.set_window_size(width, height)\n        driver.get(BASE_URL)\n&amp;gt;       accept_cookie_banner_if_present(driver)\n\ntest_bn_consulting.py:362: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntest_bn_consulting.py:317: in accept_cookie_banner_if_present\n    buttons[0].click()\n.venv\\Lib\\site-packages\\selenium\\webdriver\\remote\\webelement.py:114: in click\n    self._execute(Command.CLICK_ELEMENT)\n.venv\\Lib\\site-packages\\selenium\\webdriver\\remote\\webelement.py:508: in _execute\n    return self._parent.execute(command, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n.venv\\Lib\\site-packages\\selenium\\webdriver\\remote\\webdriver.py:492: in execute\n    self.error_handler.check_response(response)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = &amp;lt;selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x000002380E42EF90&amp;gt;\nresponse = {&amp;#x27;status&amp;#x27;: 400, &amp;#x27;value&amp;#x27;: &amp;#x27;{&amp;quot;value&amp;quot;:{&amp;quot;error&amp;quot;:&amp;quot;element not interactable&amp;quot;,&amp;quot;message&amp;quot;:&amp;quot;element not interactable\\\\n  (Sessio...7+2b97]\\\\n\\\\tKERNEL32!BaseThreadInitThunk [0x7ffcb944e957+17]\\\\n\\\\tntdll!RtlUserThreadStart [0x7ffcbaa67c1c+2c]\\\\n&amp;quot;}}&amp;#x27;}\n\n    def check_response(self, response: dict[str, Any]) -&amp;gt; None:\n        &amp;quot;&amp;quot;&amp;quot;Check that a JSON response from the WebDriver does not have an error.\n    \n        Args:\n            response: The JSON response from the WebDriver server as a dictionary\n                object.\n    \n        Raises:\n            WebDriverException: If the response contains an error message.\n        &amp;quot;&amp;quot;&amp;quot;\n        status = response.get(&amp;quot;status&amp;quot;, None)\n        if not status or status == ErrorCode.SUCCESS:\n            return\n        value = None\n        message = response.get(&amp;quot;message&amp;quot;, &amp;quot;&amp;quot;)\n        screen: str = response.get(&amp;quot;screen&amp;quot;, &amp;quot;&amp;quot;)\n        stacktrace = None\n        if isinstance(status, int):\n            value_json = response.get(&amp;quot;value&amp;quot;, None)\n            if value_json and isinstance(value_json, str):\n                try:\n                    value = json.loads(value_json)\n                    if isinstance(value, dict):\n                        if len(value) == 1:\n                            value = value[&amp;quot;value&amp;quot;]\n                        status = value.get(&amp;quot;error&amp;quot;, None)\n                        if not status:\n                            status = value.get(&amp;quot;status&amp;quot;, ErrorCode.UNKNOWN_ERROR)\n                            message = value.get(&amp;quot;value&amp;quot;) or value.get(&amp;quot;message&amp;quot;)\n                            if not isinstance(message, str):\n                                value = message\n                                message = message.get(&amp;quot;message&amp;quot;) if isinstance(message, dict) else None\n                        else:\n                            message = value.get(&amp;quot;message&amp;quot;, None)\n                except ValueError:\n                    pass\n    \n        exception_class: type[WebDriverException]\n        e = ErrorCode()\n        error_codes = [item for item in dir(e) if not item.startswith(&amp;quot;__&amp;quot;)]\n        for error_code in error_codes:\n            error_info = getattr(ErrorCode, error_code)\n            if isinstance(error_info, list) and status in error_info:\n                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)\n                break\n        else:\n            exception_class = WebDriverException\n    \n        if not value:\n            value = response[&amp;quot;value&amp;quot;]\n        if isinstance(value, str):\n            raise exception_class(value)\n        if message == &amp;quot;&amp;quot; and &amp;quot;message&amp;quot; in value:\n            message = value[&amp;quot;message&amp;quot;]\n    \n        screen = None  # type: ignore[assignment]\n        if &amp;quot;screen&amp;quot; in value:\n            screen = value[&amp;quot;screen&amp;quot;]\n    \n        stacktrace = None\n        st_value = value.get(&amp;quot;stackTrace&amp;quot;) or value.get(&amp;quot;stacktrace&amp;quot;)\n        if st_value:\n            if isinstance(st_value, str):\n                stacktrace = st_value.split(&amp;quot;\\n&amp;quot;)\n            else:\n                stacktrace = []\n                try:\n                    for frame in st_value:\n                        line = frame.get(&amp;quot;lineNumber&amp;quot;, &amp;quot;&amp;quot;)\n                        file = frame.get(&amp;quot;fileName&amp;quot;, &amp;quot;&amp;lt;anonymous&amp;gt;&amp;quot;)\n                        if line:\n                            file = f&amp;quot;{file}:{line}&amp;quot;\n                        meth = frame.get(&amp;quot;methodName&amp;quot;, &amp;quot;&amp;lt;anonymous&amp;gt;&amp;quot;)\n                        if &amp;quot;className&amp;quot; in frame:\n                            meth = f&amp;quot;{frame[&amp;#x27;className&amp;#x27;]}.{meth}&amp;quot;\n                        msg = &amp;quot;    at %s (%s)&amp;quot;\n                        msg = msg % (meth, file)\n                        stacktrace.append(msg)\n                except TypeError:\n                    pass\n        if exception_class == UnexpectedAlertPresentException:\n            alert_text = None\n            if &amp;quot;data&amp;quot; in value:\n                alert_text = value[&amp;quot;data&amp;quot;].get(&amp;quot;text&amp;quot;)\n            elif &amp;quot;alert&amp;quot; in value:\n                alert_text = value[&amp;quot;alert&amp;quot;].get(&amp;quot;text&amp;quot;)\n            raise exception_class(message, screen, stacktrace, alert_text)\n&amp;gt;       raise exception_class(message, screen, stacktrace)\nE       selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable\nE         (Session info: chrome=148.0.7778.179); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception\nE       Stacktrace:\nE       \tchromedriver!GetHandleVerifier [0x7ff626f87de5+14895]\nE       \tchromedriver!GetHandleVerifier [0x7ff626f87e50+14900]\nE       \tchromedriver!(No symbol) [0x7ff626ced396]\nE       \tchromedriver!(No symbol) [0x7ff626d48dc4]\nE       \tchromedriver!(No symbol) [0x7ff626d3bce6]\nE       \tchromedriver!(No symbol) [0x7ff626d7005a]\nE       \tchromedriver!(No symbol) [0x7ff626d3b566]\nE       \tchromedriver!(No symbol) [0x7ff626d9486f]\nE       \tchromedriver!(No symbol) [0x7ff626d39df8]\nE       \tchromedriver!(No symbol) [0x7ff626d3ace3]\nE       \tchromedriver!GetHandleVerifier [0x7ff62729cc49+3296f9]\nE       \tchromedriver!GetHandleVerifier [0x7ff627297375+323e25]\nE       \tchromedriver!GetHandleVerifier [0x7ff6272bbc82+348732]\nE       \tchromedriver!GetHandleVerifier [0x7ff626fa6045+32af5]\nE       \tchromedriver!GetHandleVerifier [0x7ff626faecec+3b79c]\nE       \tchromedriver!GetHandleVerifier [0x7ff626f91bc4+1e674]\nE       \tchromedriver!GetHandleVerifier [0x7ff626f91d54+1e804]\nE       \tchromedriver!GetHandleVerifier [0x7ff626f760e7+2b97]\nE       \tKERNEL32!BaseThreadInitThunk [0x7ffcb944e957+17]\nE       \tntdll!RtlUserThreadStart [0x7ffcbaa67c1c+2c]\n\n.venv\\Lib\\site-packages\\selenium\\webdriver\\remote\\errorhandler.py:232: ElementNotInteractableException\n&quot;}], &quot;test_bn_consulting.py::test_homepage_is_responsive_at_common_viewports[768-1024]&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Failed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_homepage_is_responsive_at_common_viewports[768-1024]&quot;, &quot;duration&quot;: &quot;480 ms&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Failed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_homepage_is_responsive_at_common_viewports[768-1024]&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;480 ms&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;driver = &amp;lt;selenium.webdriver.chrome.webdriver.WebDriver (session=&amp;quot;fbfe2e0482effa86db33e1e5faa4ce0f&amp;quot;)&amp;gt;, width = 768, height = 1024\n\n    @pytest.mark.parametrize(\n        &amp;quot;width,height&amp;quot;,\n        [(390, 844), (768, 1024), (1366, 900)],\n    )\n    def test_homepage_is_responsive_at_common_viewports(driver, width: int, height: int) -&amp;gt; None:\n        from selenium.webdriver.common.by import By\n    \n        driver.set_window_size(width, height)\n        driver.get(BASE_URL)\n&amp;gt;       accept_cookie_banner_if_present(driver)\n\ntest_bn_consulting.py:362: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntest_bn_consulting.py:317: in accept_cookie_banner_if_present\n    buttons[0].click()\n.venv\\Lib\\site-packages\\selenium\\webdriver\\remote\\webelement.py:114: in click\n    self._execute(Command.CLICK_ELEMENT)\n.venv\\Lib\\site-packages\\selenium\\webdriver\\remote\\webelement.py:508: in _execute\n    return self._parent.execute(command, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n.venv\\Lib\\site-packages\\selenium\\webdriver\\remote\\webdriver.py:492: in execute\n    self.error_handler.check_response(response)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = &amp;lt;selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x000002380E42EF90&amp;gt;\nresponse = {&amp;#x27;status&amp;#x27;: 400, &amp;#x27;value&amp;#x27;: &amp;#x27;{&amp;quot;value&amp;quot;:{&amp;quot;error&amp;quot;:&amp;quot;element not interactable&amp;quot;,&amp;quot;message&amp;quot;:&amp;quot;element not interactable\\\\n  (Sessio...7+2b97]\\\\n\\\\tKERNEL32!BaseThreadInitThunk [0x7ffcb944e957+17]\\\\n\\\\tntdll!RtlUserThreadStart [0x7ffcbaa67c1c+2c]\\\\n&amp;quot;}}&amp;#x27;}\n\n    def check_response(self, response: dict[str, Any]) -&amp;gt; None:\n        &amp;quot;&amp;quot;&amp;quot;Check that a JSON response from the WebDriver does not have an error.\n    \n        Args:\n            response: The JSON response from the WebDriver server as a dictionary\n                object.\n    \n        Raises:\n            WebDriverException: If the response contains an error message.\n        &amp;quot;&amp;quot;&amp;quot;\n        status = response.get(&amp;quot;status&amp;quot;, None)\n        if not status or status == ErrorCode.SUCCESS:\n            return\n        value = None\n        message = response.get(&amp;quot;message&amp;quot;, &amp;quot;&amp;quot;)\n        screen: str = response.get(&amp;quot;screen&amp;quot;, &amp;quot;&amp;quot;)\n        stacktrace = None\n        if isinstance(status, int):\n            value_json = response.get(&amp;quot;value&amp;quot;, None)\n            if value_json and isinstance(value_json, str):\n                try:\n                    value = json.loads(value_json)\n                    if isinstance(value, dict):\n                        if len(value) == 1:\n                            value = value[&amp;quot;value&amp;quot;]\n                        status = value.get(&amp;quot;error&amp;quot;, None)\n                        if not status:\n                            status = value.get(&amp;quot;status&amp;quot;, ErrorCode.UNKNOWN_ERROR)\n                            message = value.get(&amp;quot;value&amp;quot;) or value.get(&amp;quot;message&amp;quot;)\n                            if not isinstance(message, str):\n                                value = message\n                                message = message.get(&amp;quot;message&amp;quot;) if isinstance(message, dict) else None\n                        else:\n                            message = value.get(&amp;quot;message&amp;quot;, None)\n                except ValueError:\n                    pass\n    \n        exception_class: type[WebDriverException]\n        e = ErrorCode()\n        error_codes = [item for item in dir(e) if not item.startswith(&amp;quot;__&amp;quot;)]\n        for error_code in error_codes:\n            error_info = getattr(ErrorCode, error_code)\n            if isinstance(error_info, list) and status in error_info:\n                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)\n                break\n        else:\n            exception_class = WebDriverException\n    \n        if not value:\n            value = response[&amp;quot;value&amp;quot;]\n        if isinstance(value, str):\n            raise exception_class(value)\n        if message == &amp;quot;&amp;quot; and &amp;quot;message&amp;quot; in value:\n            message = value[&amp;quot;message&amp;quot;]\n    \n        screen = None  # type: ignore[assignment]\n        if &amp;quot;screen&amp;quot; in value:\n            screen = value[&amp;quot;screen&amp;quot;]\n    \n        stacktrace = None\n        st_value = value.get(&amp;quot;stackTrace&amp;quot;) or value.get(&amp;quot;stacktrace&amp;quot;)\n        if st_value:\n            if isinstance(st_value, str):\n                stacktrace = st_value.split(&amp;quot;\\n&amp;quot;)\n            else:\n                stacktrace = []\n                try:\n                    for frame in st_value:\n                        line = frame.get(&amp;quot;lineNumber&amp;quot;, &amp;quot;&amp;quot;)\n                        file = frame.get(&amp;quot;fileName&amp;quot;, &amp;quot;&amp;lt;anonymous&amp;gt;&amp;quot;)\n                        if line:\n                            file = f&amp;quot;{file}:{line}&amp;quot;\n                        meth = frame.get(&amp;quot;methodName&amp;quot;, &amp;quot;&amp;lt;anonymous&amp;gt;&amp;quot;)\n                        if &amp;quot;className&amp;quot; in frame:\n                            meth = f&amp;quot;{frame[&amp;#x27;className&amp;#x27;]}.{meth}&amp;quot;\n                        msg = &amp;quot;    at %s (%s)&amp;quot;\n                        msg = msg % (meth, file)\n                        stacktrace.append(msg)\n                except TypeError:\n                    pass\n        if exception_class == UnexpectedAlertPresentException:\n            alert_text = None\n            if &amp;quot;data&amp;quot; in value:\n                alert_text = value[&amp;quot;data&amp;quot;].get(&amp;quot;text&amp;quot;)\n            elif &amp;quot;alert&amp;quot; in value:\n                alert_text = value[&amp;quot;alert&amp;quot;].get(&amp;quot;text&amp;quot;)\n            raise exception_class(message, screen, stacktrace, alert_text)\n&amp;gt;       raise exception_class(message, screen, stacktrace)\nE       selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable\nE         (Session info: chrome=148.0.7778.179); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception\nE       Stacktrace:\nE       \tchromedriver!GetHandleVerifier [0x7ff626f87de5+14895]\nE       \tchromedriver!GetHandleVerifier [0x7ff626f87e50+14900]\nE       \tchromedriver!(No symbol) [0x7ff626ced396]\nE       \tchromedriver!(No symbol) [0x7ff626d48dc4]\nE       \tchromedriver!(No symbol) [0x7ff626d3bce6]\nE       \tchromedriver!(No symbol) [0x7ff626d7005a]\nE       \tchromedriver!(No symbol) [0x7ff626d3b566]\nE       \tchromedriver!(No symbol) [0x7ff626d9486f]\nE       \tchromedriver!(No symbol) [0x7ff626d39df8]\nE       \tchromedriver!(No symbol) [0x7ff626d3ace3]\nE       \tchromedriver!GetHandleVerifier [0x7ff62729cc49+3296f9]\nE       \tchromedriver!GetHandleVerifier [0x7ff627297375+323e25]\nE       \tchromedriver!GetHandleVerifier [0x7ff6272bbc82+348732]\nE       \tchromedriver!GetHandleVerifier [0x7ff626fa6045+32af5]\nE       \tchromedriver!GetHandleVerifier [0x7ff626faecec+3b79c]\nE       \tchromedriver!GetHandleVerifier [0x7ff626f91bc4+1e674]\nE       \tchromedriver!GetHandleVerifier [0x7ff626f91d54+1e804]\nE       \tchromedriver!GetHandleVerifier [0x7ff626f760e7+2b97]\nE       \tKERNEL32!BaseThreadInitThunk [0x7ffcb944e957+17]\nE       \tntdll!RtlUserThreadStart [0x7ffcbaa67c1c+2c]\n\n.venv\\Lib\\site-packages\\selenium\\webdriver\\remote\\errorhandler.py:232: ElementNotInteractableException\n&quot;}], &quot;test_bn_consulting.py::test_homepage_is_responsive_at_common_viewports[1366-900]&quot;: [{&quot;extras&quot;: [], &quot;result&quot;: &quot;Failed&quot;, &quot;testId&quot;: &quot;test_bn_consulting.py::test_homepage_is_responsive_at_common_viewports[1366-900]&quot;, &quot;duration&quot;: &quot;00:00:03&quot;, &quot;resultsTableRow&quot;: [&quot;&lt;td class=\&quot;col-result\&quot;&gt;Failed&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-testId\&quot;&gt;test_bn_consulting.py::test_homepage_is_responsive_at_common_viewports[1366-900]&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-duration\&quot;&gt;00:00:03&lt;/td&gt;&quot;, &quot;&lt;td class=\&quot;col-links\&quot;&gt;&lt;/td&gt;&quot;], &quot;log&quot;: &quot;driver = &amp;lt;selenium.webdriver.chrome.webdriver.WebDriver (session=&amp;quot;fbfe2e0482effa86db33e1e5faa4ce0f&amp;quot;)&amp;gt;, width = 1366, height = 900\n\n    @pytest.mark.parametrize(\n        &amp;quot;width,height&amp;quot;,\n        [(390, 844), (768, 1024), (1366, 900)],\n    )\n    def test_homepage_is_responsive_at_common_viewports(driver, width: int, height: int) -&amp;gt; None:\n        from selenium.webdriver.common.by import By\n    \n        driver.set_window_size(width, height)\n        driver.get(BASE_URL)\n&amp;gt;       accept_cookie_banner_if_present(driver)\n\ntest_bn_consulting.py:362: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntest_bn_consulting.py:317: in accept_cookie_banner_if_present\n    buttons[0].click()\n.venv\\Lib\\site-packages\\selenium\\webdriver\\remote\\webelement.py:114: in click\n    self._execute(Command.CLICK_ELEMENT)\n.venv\\Lib\\site-packages\\selenium\\webdriver\\remote\\webelement.py:508: in _execute\n    return self._parent.execute(command, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n.venv\\Lib\\site-packages\\selenium\\webdriver\\remote\\webdriver.py:492: in execute\n    self.error_handler.check_response(response)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = &amp;lt;selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x000002380E42EF90&amp;gt;\nresponse = {&amp;#x27;status&amp;#x27;: 400, &amp;#x27;value&amp;#x27;: &amp;#x27;{&amp;quot;value&amp;quot;:{&amp;quot;error&amp;quot;:&amp;quot;element not interactable&amp;quot;,&amp;quot;message&amp;quot;:&amp;quot;element not interactable\\\\n  (Sessio...7+2b97]\\\\n\\\\tKERNEL32!BaseThreadInitThunk [0x7ffcb944e957+17]\\\\n\\\\tntdll!RtlUserThreadStart [0x7ffcbaa67c1c+2c]\\\\n&amp;quot;}}&amp;#x27;}\n\n    def check_response(self, response: dict[str, Any]) -&amp;gt; None:\n        &amp;quot;&amp;quot;&amp;quot;Check that a JSON response from the WebDriver does not have an error.\n    \n        Args:\n            response: The JSON response from the WebDriver server as a dictionary\n                object.\n    \n        Raises:\n            WebDriverException: If the response contains an error message.\n        &amp;quot;&amp;quot;&amp;quot;\n        status = response.get(&amp;quot;status&amp;quot;, None)\n        if not status or status == ErrorCode.SUCCESS:\n            return\n        value = None\n        message = response.get(&amp;quot;message&amp;quot;, &amp;quot;&amp;quot;)\n        screen: str = response.get(&amp;quot;screen&amp;quot;, &amp;quot;&amp;quot;)\n        stacktrace = None\n        if isinstance(status, int):\n            value_json = response.get(&amp;quot;value&amp;quot;, None)\n            if value_json and isinstance(value_json, str):\n                try:\n                    value = json.loads(value_json)\n                    if isinstance(value, dict):\n                        if len(value) == 1:\n                            value = value[&amp;quot;value&amp;quot;]\n                        status = value.get(&amp;quot;error&amp;quot;, None)\n                        if not status:\n                            status = value.get(&amp;quot;status&amp;quot;, ErrorCode.UNKNOWN_ERROR)\n                            message = value.get(&amp;quot;value&amp;quot;) or value.get(&amp;quot;message&amp;quot;)\n                            if not isinstance(message, str):\n                                value = message\n                                message = message.get(&amp;quot;message&amp;quot;) if isinstance(message, dict) else None\n                        else:\n                            message = value.get(&amp;quot;message&amp;quot;, None)\n                except ValueError:\n                    pass\n    \n        exception_class: type[WebDriverException]\n        e = ErrorCode()\n        error_codes = [item for item in dir(e) if not item.startswith(&amp;quot;__&amp;quot;)]\n        for error_code in error_codes:\n            error_info = getattr(ErrorCode, error_code)\n            if isinstance(error_info, list) and status in error_info:\n                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)\n                break\n        else:\n            exception_class = WebDriverException\n    \n        if not value:\n            value = response[&amp;quot;value&amp;quot;]\n        if isinstance(value, str):\n            raise exception_class(value)\n        if message == &amp;quot;&amp;quot; and &amp;quot;message&amp;quot; in value:\n            message = value[&amp;quot;message&amp;quot;]\n    \n        screen = None  # type: ignore[assignment]\n        if &amp;quot;screen&amp;quot; in value:\n            screen = value[&amp;quot;screen&amp;quot;]\n    \n        stacktrace = None\n        st_value = value.get(&amp;quot;stackTrace&amp;quot;) or value.get(&amp;quot;stacktrace&amp;quot;)\n        if st_value:\n            if isinstance(st_value, str):\n                stacktrace = st_value.split(&amp;quot;\\n&amp;quot;)\n            else:\n                stacktrace = []\n                try:\n                    for frame in st_value:\n                        line = frame.get(&amp;quot;lineNumber&amp;quot;, &amp;quot;&amp;quot;)\n                        file = frame.get(&amp;quot;fileName&amp;quot;, &amp;quot;&amp;lt;anonymous&amp;gt;&amp;quot;)\n                        if line:\n                            file = f&amp;quot;{file}:{line}&amp;quot;\n                        meth = frame.get(&amp;quot;methodName&amp;quot;, &amp;quot;&amp;lt;anonymous&amp;gt;&amp;quot;)\n                        if &amp;quot;className&amp;quot; in frame:\n                            meth = f&amp;quot;{frame[&amp;#x27;className&amp;#x27;]}.{meth}&amp;quot;\n                        msg = &amp;quot;    at %s (%s)&amp;quot;\n                        msg = msg % (meth, file)\n                        stacktrace.append(msg)\n                except TypeError:\n                    pass\n        if exception_class == UnexpectedAlertPresentException:\n            alert_text = None\n            if &amp;quot;data&amp;quot; in value:\n                alert_text = value[&amp;quot;data&amp;quot;].get(&amp;quot;text&amp;quot;)\n            elif &amp;quot;alert&amp;quot; in value:\n                alert_text = value[&amp;quot;alert&amp;quot;].get(&amp;quot;text&amp;quot;)\n            raise exception_class(message, screen, stacktrace, alert_text)\n&amp;gt;       raise exception_class(message, screen, stacktrace)\nE       selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable\nE         (Session info: chrome=148.0.7778.179); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementnotinteractableexception\nE       Stacktrace:\nE       \tchromedriver!GetHandleVerifier [0x7ff626f87de5+14895]\nE       \tchromedriver!GetHandleVerifier [0x7ff626f87e50+14900]\nE       \tchromedriver!(No symbol) [0x7ff626ced396]\nE       \tchromedriver!(No symbol) [0x7ff626d48dc4]\nE       \tchromedriver!(No symbol) [0x7ff626d3bce6]\nE       \tchromedriver!(No symbol) [0x7ff626d7005a]\nE       \tchromedriver!(No symbol) [0x7ff626d3b566]\nE       \tchromedriver!(No symbol) [0x7ff626d9486f]\nE       \tchromedriver!(No symbol) [0x7ff626d39df8]\nE       \tchromedriver!(No symbol) [0x7ff626d3ace3]\nE       \tchromedriver!GetHandleVerifier [0x7ff62729cc49+3296f9]\nE       \tchromedriver!GetHandleVerifier [0x7ff627297375+323e25]\nE       \tchromedriver!GetHandleVerifier [0x7ff6272bbc82+348732]\nE       \tchromedriver!GetHandleVerifier [0x7ff626fa6045+32af5]\nE       \tchromedriver!GetHandleVerifier [0x7ff626faecec+3b79c]\nE       \tchromedriver!GetHandleVerifier [0x7ff626f91bc4+1e674]\nE       \tchromedriver!GetHandleVerifier [0x7ff626f91d54+1e804]\nE       \tchromedriver!GetHandleVerifier [0x7ff626f760e7+2b97]\nE       \tKERNEL32!BaseThreadInitThunk [0x7ffcb944e957+17]\nE       \tntdll!RtlUserThreadStart [0x7ffcbaa67c1c+2c]\n\n.venv\\Lib\\site-packages\\selenium\\webdriver\\remote\\errorhandler.py:232: ElementNotInteractableException\n&quot;}]}, &quot;renderCollapsed&quot;: [&quot;passed&quot;], &quot;initialSort&quot;: &quot;result&quot;, &quot;title&quot;: &quot;raport_testare.html&quot;}"></div>
+    <script>
+      (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+const { getCollapsedCategory, setCollapsedIds } = require('./storage.js')
+
+class DataManager {
+    setManager(data) {
+        const collapsedCategories = [...getCollapsedCategory(data.renderCollapsed)]
+        const collapsedIds = []
+        const tests = Object.values(data.tests).flat().map((test, index) => {
+            const collapsed = collapsedCategories.includes(test.result.toLowerCase())
+            const id = `test_${index}`
+            if (collapsed) {
+                collapsedIds.push(id)
+            }
+            return {
+                ...test,
+                id,
+                collapsed,
+            }
+        })
+        const dataBlob = { ...data, tests }
+        this.data = { ...dataBlob }
+        this.renderData = { ...dataBlob }
+        setCollapsedIds(collapsedIds)
+    }
+
+    get allData() {
+        return { ...this.data }
+    }
+
+    resetRender() {
+        this.renderData = { ...this.data }
+    }
+
+    setRender(data) {
+        this.renderData.tests = [...data]
+    }
+
+    toggleCollapsedItem(id) {
+        this.renderData.tests = this.renderData.tests.map((test) =>
+            test.id === id ? { ...test, collapsed: !test.collapsed } : test,
+        )
+    }
+
+    set allCollapsed(collapsed) {
+        this.renderData = { ...this.renderData, tests: [...this.renderData.tests.map((test) => (
+            { ...test, collapsed }
+        ))] }
+    }
+
+    get testSubset() {
+        return [...this.renderData.tests]
+    }
+
+    get environment() {
+        return this.renderData.environment
+    }
+
+    get initialSort() {
+        return this.data.initialSort
+    }
+}
+
+module.exports = {
+    manager: new DataManager(),
+}
+
+},{"./storage.js":8}],2:[function(require,module,exports){
+const mediaViewer = require('./mediaviewer.js')
+const templateEnvRow = document.getElementById('template_environment_row')
+const templateResult = document.getElementById('template_results-table__tbody')
+
+function htmlToElements(html) {
+    const temp = document.createElement('template')
+    temp.innerHTML = html
+    return temp.content.childNodes
+}
+
+const find = (selector, elem) => {
+    if (!elem) {
+        elem = document
+    }
+    return elem.querySelector(selector)
+}
+
+const findAll = (selector, elem) => {
+    if (!elem) {
+        elem = document
+    }
+    return [...elem.querySelectorAll(selector)]
+}
+
+const dom = {
+    getStaticRow: (key, value) => {
+        const envRow = templateEnvRow.content.cloneNode(true)
+        const isObj = typeof value === 'object' && value !== null
+        const values = isObj ? Object.keys(value).map((k) => `${k}: ${value[k]}`) : null
+
+        const valuesElement = htmlToElements(
+            values ? `<ul>${values.map((val) => `<li>${val}</li>`).join('')}<ul>` : `<div>${value}</div>`)[0]
+        const td = findAll('td', envRow)
+        td[0].textContent = key
+        td[1].appendChild(valuesElement)
+
+        return envRow
+    },
+    getResultTBody: ({ testId, id, log, extras, resultsTableRow, tableHtml, result, collapsed }) => {
+        const resultBody = templateResult.content.cloneNode(true)
+        resultBody.querySelector('tbody').classList.add(result.toLowerCase())
+        resultBody.querySelector('tbody').id = testId
+        resultBody.querySelector('.collapsible').dataset.id = id
+
+        resultsTableRow.forEach((html) => {
+            const t = document.createElement('template')
+            t.innerHTML = html
+            resultBody.querySelector('.collapsible').appendChild(t.content)
+        })
+
+        if (log) {
+            // Wrap lines starting with "E" with span.error to color those lines red
+            const wrappedLog = log.replace(/^E.*$/gm, (match) => `<span class="error">${match}</span>`)
+            resultBody.querySelector('.log').innerHTML = wrappedLog
+        } else {
+            resultBody.querySelector('.log').remove()
+        }
+
+        if (collapsed) {
+            resultBody.querySelector('.collapsible > .col-result')?.classList.add('collapsed')
+            resultBody.querySelector('.extras-row').classList.add('hidden')
+        } else {
+            resultBody.querySelector('.collapsible > .col-result')?.classList.remove('collapsed')
+        }
+
+        const media = []
+        extras?.forEach(({ name, format_type, content }) => {
+            if (['image', 'video'].includes(format_type)) {
+                media.push({ path: content, name, format_type })
+            }
+
+            if (format_type === 'html') {
+                resultBody.querySelector('.extraHTML').insertAdjacentHTML('beforeend', `<div>${content}</div>`)
+            }
+        })
+        mediaViewer.setup(resultBody, media)
+
+        // Add custom html from the pytest_html_results_table_html hook
+        tableHtml?.forEach((item) => {
+            resultBody.querySelector('td[class="extra"]').insertAdjacentHTML('beforeend', item)
+        })
+
+        return resultBody
+    },
+}
+
+module.exports = {
+    dom,
+    htmlToElements,
+    find,
+    findAll,
+}
+
+},{"./mediaviewer.js":6}],3:[function(require,module,exports){
+const { manager } = require('./datamanager.js')
+const { doSort } = require('./sort.js')
+const storageModule = require('./storage.js')
+
+const getFilteredSubSet = (filter) =>
+    manager.allData.tests.filter(({ result }) => filter.includes(result.toLowerCase()))
+
+const doInitFilter = () => {
+    const currentFilter = storageModule.getVisible()
+    const filteredSubset = getFilteredSubSet(currentFilter)
+    manager.setRender(filteredSubset)
+}
+
+const doFilter = (type, show) => {
+    if (show) {
+        storageModule.showCategory(type)
+    } else {
+        storageModule.hideCategory(type)
+    }
+
+    const currentFilter = storageModule.getVisible()
+    const filteredSubset = getFilteredSubSet(currentFilter)
+    manager.setRender(filteredSubset)
+
+    const sortColumn = storageModule.getSort()
+    doSort(sortColumn, true)
+}
+
+module.exports = {
+    doFilter,
+    doInitFilter,
+}
+
+},{"./datamanager.js":1,"./sort.js":7,"./storage.js":8}],4:[function(require,module,exports){
+const { redraw, bindEvents, renderStatic } = require('./main.js')
+const { doInitFilter } = require('./filter.js')
+const { doInitSort } = require('./sort.js')
+const { manager } = require('./datamanager.js')
+const data = JSON.parse(document.getElementById('data-container').dataset.jsonblob)
+
+function init() {
+    manager.setManager(data)
+    doInitFilter()
+    doInitSort()
+    renderStatic()
+    redraw()
+    bindEvents()
+}
+
+init()
+
+},{"./datamanager.js":1,"./filter.js":3,"./main.js":5,"./sort.js":7}],5:[function(require,module,exports){
+const { dom, find, findAll } = require('./dom.js')
+const { manager } = require('./datamanager.js')
+const { doSort } = require('./sort.js')
+const { doFilter } = require('./filter.js')
+const {
+    getVisible,
+    getCollapsedIds,
+    setCollapsedIds,
+    getSort,
+    getSortDirection,
+    possibleFilters,
+} = require('./storage.js')
+
+const removeChildren = (node) => {
+    while (node.firstChild) {
+        node.removeChild(node.firstChild)
+    }
+}
+
+const renderStatic = () => {
+    const renderEnvironmentTable = () => {
+        const environment = manager.environment
+        const rows = Object.keys(environment).map((key) => dom.getStaticRow(key, environment[key]))
+        const table = document.getElementById('environment')
+        removeChildren(table)
+        rows.forEach((row) => table.appendChild(row))
+    }
+    renderEnvironmentTable()
+}
+
+const addItemToggleListener = (elem) => {
+    elem.addEventListener('click', ({ target }) => {
+        const id = target.parentElement.dataset.id
+        manager.toggleCollapsedItem(id)
+
+        const collapsedIds = getCollapsedIds()
+        if (collapsedIds.includes(id)) {
+            const updated = collapsedIds.filter((item) => item !== id)
+            setCollapsedIds(updated)
+        } else {
+            collapsedIds.push(id)
+            setCollapsedIds(collapsedIds)
+        }
+        redraw()
+    })
+}
+
+const renderContent = (tests) => {
+    const sortAttr = getSort(manager.initialSort)
+    const sortAsc = JSON.parse(getSortDirection())
+    const rows = tests.map(dom.getResultTBody)
+    const table = document.getElementById('results-table')
+    const tableHeader = document.getElementById('results-table-head')
+
+    const newTable = document.createElement('table')
+    newTable.id = 'results-table'
+
+    // remove all sorting classes and set the relevant
+    findAll('.sortable', tableHeader).forEach((elem) => elem.classList.remove('asc', 'desc'))
+    tableHeader.querySelector(`.sortable[data-column-type="${sortAttr}"]`)?.classList.add(sortAsc ? 'desc' : 'asc')
+    newTable.appendChild(tableHeader)
+
+    if (!rows.length) {
+        const emptyTable = document.getElementById('template_results-table__body--empty').content.cloneNode(true)
+        newTable.appendChild(emptyTable)
+    } else {
+        rows.forEach((row) => {
+            if (!!row) {
+                findAll('.collapsible td:not(.col-links', row).forEach(addItemToggleListener)
+                find('.logexpander', row).addEventListener('click',
+                    (evt) => evt.target.parentNode.classList.toggle('expanded'),
+                )
+                newTable.appendChild(row)
+            }
+        })
+    }
+
+    table.replaceWith(newTable)
+}
+
+const renderDerived = () => {
+    const currentFilter = getVisible()
+    possibleFilters.forEach((result) => {
+        const input = document.querySelector(`input[data-test-result="${result}"]`)
+        input.checked = currentFilter.includes(result)
+    })
+}
+
+const bindEvents = () => {
+    const filterColumn = (evt) => {
+        const { target: element } = evt
+        const { testResult } = element.dataset
+
+        doFilter(testResult, element.checked)
+        const collapsedIds = getCollapsedIds()
+        const updated = manager.renderData.tests.map((test) => {
+            return {
+                ...test,
+                collapsed: collapsedIds.includes(test.id),
+            }
+        })
+        manager.setRender(updated)
+        redraw()
+    }
+
+    const header = document.getElementById('environment-header')
+    header.addEventListener('click', () => {
+        const table = document.getElementById('environment')
+        table.classList.toggle('hidden')
+        header.classList.toggle('collapsed')
+    })
+
+    findAll('input[name="filter_checkbox"]').forEach((elem) => {
+        elem.addEventListener('click', filterColumn)
+    })
+
+    findAll('.sortable').forEach((elem) => {
+        elem.addEventListener('click', (evt) => {
+            const { target: element } = evt
+            const { columnType } = element.dataset
+            doSort(columnType)
+            redraw()
+        })
+    })
+
+    document.getElementById('show_all_details').addEventListener('click', () => {
+        manager.allCollapsed = false
+        setCollapsedIds([])
+        redraw()
+    })
+    document.getElementById('hide_all_details').addEventListener('click', () => {
+        manager.allCollapsed = true
+        const allIds = manager.renderData.tests.map((test) => test.id)
+        setCollapsedIds(allIds)
+        redraw()
+    })
+}
+
+const redraw = () => {
+    const { testSubset } = manager
+
+    renderContent(testSubset)
+    renderDerived()
+}
+
+module.exports = {
+    redraw,
+    bindEvents,
+    renderStatic,
+}
+
+},{"./datamanager.js":1,"./dom.js":2,"./filter.js":3,"./sort.js":7,"./storage.js":8}],6:[function(require,module,exports){
+class MediaViewer {
+    constructor(assets) {
+        this.assets = assets
+        this.index = 0
+    }
+
+    nextActive() {
+        this.index = this.index === this.assets.length - 1 ? 0 : this.index + 1
+        return [this.activeFile, this.index]
+    }
+
+    prevActive() {
+        this.index = this.index === 0 ? this.assets.length - 1 : this.index -1
+        return [this.activeFile, this.index]
+    }
+
+    get currentIndex() {
+        return this.index
+    }
+
+    get activeFile() {
+        return this.assets[this.index]
+    }
+}
+
+
+const setup = (resultBody, assets) => {
+    if (!assets.length) {
+        resultBody.querySelector('.media').classList.add('hidden')
+        return
+    }
+
+    const mediaViewer = new MediaViewer(assets)
+    const container = resultBody.querySelector('.media-container')
+    const leftArrow = resultBody.querySelector('.media-container__nav--left')
+    const rightArrow = resultBody.querySelector('.media-container__nav--right')
+    const mediaName = resultBody.querySelector('.media__name')
+    const counter = resultBody.querySelector('.media__counter')
+    const imageEl = resultBody.querySelector('img')
+    const sourceEl = resultBody.querySelector('source')
+    const videoEl = resultBody.querySelector('video')
+
+    const setImg = (media, index) => {
+        if (media?.format_type === 'image') {
+            imageEl.src = media.path
+
+            imageEl.classList.remove('hidden')
+            videoEl.classList.add('hidden')
+        } else if (media?.format_type === 'video') {
+            sourceEl.src = media.path
+
+            videoEl.classList.remove('hidden')
+            imageEl.classList.add('hidden')
+        }
+
+        mediaName.innerText = media?.name
+        counter.innerText = `${index + 1} / ${assets.length}`
+    }
+    setImg(mediaViewer.activeFile, mediaViewer.currentIndex)
+
+    const moveLeft = () => {
+        const [media, index] = mediaViewer.prevActive()
+        setImg(media, index)
+    }
+    const doRight = () => {
+        const [media, index] = mediaViewer.nextActive()
+        setImg(media, index)
+    }
+    const openImg = () => {
+        window.open(mediaViewer.activeFile.path, '_blank')
+    }
+    if (assets.length === 1) {
+        container.classList.add('media-container--fullscreen')
+    } else {
+        leftArrow.addEventListener('click', moveLeft)
+        rightArrow.addEventListener('click', doRight)
+    }
+    imageEl.addEventListener('click', openImg)
+}
+
+module.exports = {
+    setup,
+}
+
+},{}],7:[function(require,module,exports){
+const { manager } = require('./datamanager.js')
+const storageModule = require('./storage.js')
+
+const genericSort = (list, key, ascending, customOrder) => {
+    let sorted
+    if (customOrder) {
+        sorted = list.sort((a, b) => {
+            const aValue = a.result.toLowerCase()
+            const bValue = b.result.toLowerCase()
+
+            const aIndex = customOrder.findIndex((item) => item.toLowerCase() === aValue)
+            const bIndex = customOrder.findIndex((item) => item.toLowerCase() === bValue)
+
+            // Compare the indices to determine the sort order
+            return aIndex - bIndex
+        })
+    } else {
+        sorted = list.sort((a, b) => a[key] === b[key] ? 0 : a[key] > b[key] ? 1 : -1)
+    }
+
+    if (ascending) {
+        sorted.reverse()
+    }
+    return sorted
+}
+
+const durationSort = (list, ascending) => {
+    const parseDuration = (duration) => {
+        if (duration.includes(':')) {
+            // If it's in the format "HH:mm:ss"
+            const [hours, minutes, seconds] = duration.split(':').map(Number)
+            return (hours * 3600 + minutes * 60 + seconds) * 1000
+        } else {
+            // If it's in the format "nnn ms"
+            return parseInt(duration)
+        }
+    }
+    const sorted = list.sort((a, b) => parseDuration(a['duration']) - parseDuration(b['duration']))
+    if (ascending) {
+        sorted.reverse()
+    }
+    return sorted
+}
+
+const doInitSort = () => {
+    const type = storageModule.getSort(manager.initialSort)
+    const ascending = storageModule.getSortDirection()
+    const list = manager.testSubset
+    const initialOrder = ['Error', 'Failed', 'Rerun', 'XFailed', 'XPassed', 'Skipped', 'Passed']
+
+    storageModule.setSort(type)
+    storageModule.setSortDirection(ascending)
+
+    if (type?.toLowerCase() === 'original') {
+        manager.setRender(list)
+    } else {
+        let sortedList
+        switch (type) {
+        case 'duration':
+            sortedList = durationSort(list, ascending)
+            break
+        case 'result':
+            sortedList = genericSort(list, type, ascending, initialOrder)
+            break
+        default:
+            sortedList = genericSort(list, type, ascending)
+            break
+        }
+        manager.setRender(sortedList)
+    }
+}
+
+const doSort = (type, skipDirection) => {
+    const newSortType = storageModule.getSort(manager.initialSort) !== type
+    const currentAsc = storageModule.getSortDirection()
+    let ascending
+    if (skipDirection) {
+        ascending = currentAsc
+    } else {
+        ascending = newSortType ? false : !currentAsc
+    }
+    storageModule.setSort(type)
+    storageModule.setSortDirection(ascending)
+
+    const list = manager.testSubset
+    const sortedList = type === 'duration' ? durationSort(list, ascending) : genericSort(list, type, ascending)
+    manager.setRender(sortedList)
+}
+
+module.exports = {
+    doInitSort,
+    doSort,
+}
+
+},{"./datamanager.js":1,"./storage.js":8}],8:[function(require,module,exports){
+const possibleFilters = [
+    'passed',
+    'skipped',
+    'failed',
+    'error',
+    'xfailed',
+    'xpassed',
+    'rerun',
+]
+
+const getVisible = () => {
+    const url = new URL(window.location.href)
+    const settings = new URLSearchParams(url.search).get('visible')
+    const lower = (item) => {
+        const lowerItem = item.toLowerCase()
+        if (possibleFilters.includes(lowerItem)) {
+            return lowerItem
+        }
+        return null
+    }
+    return settings === null ?
+        possibleFilters :
+        [...new Set(settings?.split(',').map(lower).filter((item) => item))]
+}
+
+const hideCategory = (categoryToHide) => {
+    const url = new URL(window.location.href)
+    const visibleParams = new URLSearchParams(url.search).get('visible')
+    const currentVisible = visibleParams ? visibleParams.split(',') : [...possibleFilters]
+    const settings = [...new Set(currentVisible)].filter((f) => f !== categoryToHide).join(',')
+
+    url.searchParams.set('visible', settings)
+    window.history.pushState({}, null, unescape(url.href))
+}
+
+const showCategory = (categoryToShow) => {
+    if (typeof window === 'undefined') {
+        return
+    }
+    const url = new URL(window.location.href)
+    const currentVisible = new URLSearchParams(url.search).get('visible')?.split(',').filter(Boolean) ||
+        [...possibleFilters]
+    const settings = [...new Set([categoryToShow, ...currentVisible])]
+    const noFilter = possibleFilters.length === settings.length || !settings.length
+
+    noFilter ? url.searchParams.delete('visible') : url.searchParams.set('visible', settings.join(','))
+    window.history.pushState({}, null, unescape(url.href))
+}
+
+const getSort = (initialSort) => {
+    const url = new URL(window.location.href)
+    let sort = new URLSearchParams(url.search).get('sort')
+    if (!sort) {
+        sort = initialSort || 'result'
+    }
+    return sort
+}
+
+const setSort = (type) => {
+    const url = new URL(window.location.href)
+    url.searchParams.set('sort', type)
+    window.history.pushState({}, null, unescape(url.href))
+}
+
+const getCollapsedCategory = (renderCollapsed) => {
+    let categories
+    if (typeof window !== 'undefined') {
+        const url = new URL(window.location.href)
+        const collapsedItems = new URLSearchParams(url.search).get('collapsed')
+        switch (true) {
+        case !renderCollapsed && collapsedItems === null:
+            categories = ['passed']
+            break
+        case collapsedItems?.length === 0 || /^["']{2}$/.test(collapsedItems):
+            categories = []
+            break
+        case /^all$/.test(collapsedItems) || collapsedItems === null && /^all$/.test(renderCollapsed):
+            categories = [...possibleFilters]
+            break
+        default:
+            categories = collapsedItems?.split(',').map((item) => item.toLowerCase()) || renderCollapsed
+            break
+        }
+    } else {
+        categories = []
+    }
+    return categories
+}
+
+const getSortDirection = () => JSON.parse(sessionStorage.getItem('sortAsc')) || false
+const setSortDirection = (ascending) => sessionStorage.setItem('sortAsc', ascending)
+
+const getCollapsedIds = () => JSON.parse(sessionStorage.getItem('collapsedIds')) || []
+const setCollapsedIds = (list) => sessionStorage.setItem('collapsedIds', JSON.stringify(list))
+
+module.exports = {
+    getVisible,
+    hideCategory,
+    showCategory,
+    getCollapsedIds,
+    setCollapsedIds,
+    getSort,
+    setSort,
+    getSortDirection,
+    setSortDirection,
+    getCollapsedCategory,
+    possibleFilters,
+}
+
+},{}]},{},[4]);
+    </script>
+  </footer>
+  
+<script>
+(function() {
+  var ws = new WebSocket('ws://' + window.location.host + 
+             '/jb-server-page?reloadMode=RELOAD_ON_SAVE&'+
+             'referrer=' + encodeURIComponent(window.location.pathname));
+  ws.onmessage = function (msg) {
+      if (msg.data === 'reload') {
+          window.location.reload();
+      }
+      if (msg.data.startsWith('update-css ')) {
+          var messageId = msg.data.substring(11);
+          var links = document.getElementsByTagName('link');
+          for (var i = 0; i < links.length; i++) {
+              var link = links[i];
+              if (link.rel !== 'stylesheet') continue;
+              var clonedLink = link.cloneNode(true);
+              var newHref = link.href.replace(/(&|\?)jbUpdateLinksId=\d+/, "$1jbUpdateLinksId=" + messageId);
+              if (newHref !== link.href) {
+                clonedLink.href = newHref;
+              }
+              else {
+                var indexOfQuest = newHref.indexOf('?');
+                if (indexOfQuest >= 0) {
+                  // to support ?foo#hash 
+                  clonedLink.href = newHref.substring(0, indexOfQuest + 1) + 'jbUpdateLinksId=' + messageId + '&' + 
+                                    newHref.substring(indexOfQuest + 1);
+                }
+                else {
+                  clonedLink.href += '?' + 'jbUpdateLinksId=' + messageId;
+                }
+              }
+              link.replaceWith(clonedLink);
+          }
+      }
+  };
+})();
+</script></body></html>
